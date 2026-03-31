@@ -358,13 +358,14 @@ async function loadSheet() {
 }
 
 async function saveSheet() {
-  sync("saving","Saving…");
-  try {
-    const r = await fetch(webAppUrl,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(tasks)});
-    const d = await r.json();
-    if (d.status==="ok") sync("saved","✓ Saved to Google Sheets");
-    else throw new Error(d.message);
-  } catch(e) { sync("err","⚠ Save failed"); }
+sync("saving","Saving…");
+try {
+const encoded = encodeURIComponent(JSON.stringify(tasks));
+const r = await fetch(webAppUrl + "?action=save&data=" + encoded);
+const d = await r.json();
+if (d.status==="ok") sync("saved","✓ Saved to Google Sheets");
+else throw new Error(d.message);
+} catch(e) { sync("err","⚠ Save failed"); }
 }
 
 function delaySave() { clearTimeout(saveTimer); saveTimer=setTimeout(saveSheet,800); }
