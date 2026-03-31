@@ -20,7 +20,6 @@
   --mono:'DM Mono','Courier New',monospace;
   --serif:'Playfair Display',Georgia,serif;
   --sat:env(safe-area-inset-top,0px);
-  --sab:env(safe-area-inset-bottom,0px);
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{min-height:100%;background:var(--bg);font-family:var(--mono);color:var(--text)}
@@ -80,25 +79,45 @@ body{padding-top:var(--sat)}
 .bline{flex:1;height:1px;background:var(--border);margin-left:4px}
 .bchev{font-size:9px;color:var(--faint)}
 .tlist{display:flex;flex-direction:column;gap:5px}
-.trow{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:7px;background:var(--card);border:1px solid var(--border);box-shadow:0 1px 3px rgba(0,0,0,.04);transition:box-shadow .15s,opacity .2s}
+
+/* Normal task row */
+.trow{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:7px;background:var(--card);border:1px solid var(--border);box-shadow:0 1px 3px rgba(0,0,0,.04);transition:box-shadow .15s}
 .trow:hover{box-shadow:0 2px 8px rgba(0,0,0,.09)}
-.trow:hover .del{opacity:1}
-.trow:hover .tdb:not(.act){color:#BBBBBB!important;border-color:#E0E0E0!important}
-.trow.dn{opacity:.4;background:transparent;border-color:transparent;box-shadow:none}
-.chk{width:17px;height:17px;border:1.5px solid #D0D0D0;border-radius:4px;flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;background:#fff;transition:all .15s}
 .tbody{flex:1;min-width:0}
 .ttxt{font-size:13px;color:var(--text);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:.01em;cursor:pointer}
-.dn .ttxt{text-decoration:line-through;color:#AAAAAA;cursor:default}
+.ttxt:hover{color:var(--mission)}
 .ttime{font-size:10px;color:var(--muted);letter-spacing:.04em}
+
+/* Today button */
 .tdb{font-family:var(--mono);font-size:10px;flex-shrink:0;cursor:pointer;border-radius:20px;padding:3px 8px;border:1px solid transparent;color:transparent;transition:all .15s;display:flex;align-items:center;gap:5px;background:transparent;white-space:nowrap}
 .tdb .dot{width:7px;height:7px;border-radius:50%;background:#D0D0D0;flex-shrink:0;transition:background .15s}
 .tdb.act{color:var(--clients);border-color:rgba(184,122,32,.35);background:rgba(212,151,59,.1)}
 .tdb.act .dot{background:var(--today)}
-.del{opacity:0;cursor:pointer;color:#CCC;font-size:18px;line-height:1;flex-shrink:0;transition:opacity .15s,color .15s;padding:0 2px}
+.trow:hover .tdb:not(.act){color:#BBBBBB;border-color:#E0E0E0}
+
+/* Delete button — always visible, bold red */
+.del{cursor:pointer;color:#DDBBBB;font-size:20px;line-height:1;flex-shrink:0;transition:color .15s;padding:0 3px;font-weight:300}
 .del:hover{color:var(--danger)}
+
+/* Inline edit row */
+.trow-edit{border-radius:7px;background:var(--card);border:1.5px solid var(--mission-br);box-shadow:0 2px 10px rgba(74,125,192,.12);padding:10px 12px;display:flex;flex-direction:column;gap:10px}
+.edit-input{background:transparent;border:none;border-bottom:1px solid #EBEBEB;color:var(--text);font-size:13px;padding:4px 0;font-family:var(--mono);width:100%}
+.edit-input:focus{outline:none;border-bottom-color:var(--mission)}
+.edit-ctrls{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.eb{font-family:var(--mono);font-size:9px;letter-spacing:.07em;text-transform:uppercase;padding:4px 8px;border-radius:4px;border:1px solid #E0E0E0;background:transparent;color:var(--muted);cursor:pointer;transition:all .15s}
+.eb.onm{background:var(--mission-bg);border-color:var(--mission-br);color:var(--mission)}
+.eb.onc{background:var(--clients-bg);border-color:var(--clients-br);color:var(--clients)}
+.eb.onb{background:var(--bcm-bg);border-color:var(--bcm-br);color:var(--bcm)}
+.eb.ont{background:rgba(184,122,32,.08);border-color:rgba(184,122,32,.35);color:var(--clients)}
+.etime{font-family:var(--mono);font-size:10px;padding:4px 7px;border-radius:4px;border:1px solid #E0E0E0;background:transparent;color:var(--muted)}
+.etime:focus{outline:none}
+.edit-acts{display:flex;gap:7px;justify-content:flex-end}
+.e-cancel{background:transparent;border:1px solid var(--border);color:var(--muted);padding:5px 12px;border-radius:4px;font-size:11px;font-family:var(--mono);cursor:pointer}
+.e-save{background:var(--text);border:none;color:#fff;padding:5px 14px;border-radius:4px;font-size:11px;font-family:var(--mono);font-weight:500;cursor:pointer}
+
 .empty{padding:28px 0;text-align:center;color:var(--faint);font-size:12px}
 
-/* Form */
+/* Add form */
 .aform{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,.06);flex-direction:column;gap:12px;display:none}
 .aform.show{display:flex}
 .aform input[type=text]{background:transparent;border:none;border-bottom:1px solid #EBEBEB;color:var(--text);font-size:13px;padding:6px 0;font-family:var(--mono);width:100%}
@@ -114,17 +133,13 @@ body{padding-top:var(--sat)}
 .facts{display:flex;gap:8px;justify-content:flex-end}
 .bcn{background:transparent;border:1px solid var(--border);color:var(--muted);padding:6px 14px;border-radius:4px;font-size:11px;font-family:var(--mono);cursor:pointer}
 .bsv{background:var(--text);border:none;color:#fff;padding:6px 16px;border-radius:4px;font-size:11px;font-family:var(--mono);font-weight:500;cursor:pointer}
-.bsv:disabled{opacity:.3;cursor:default}
 
 /* Footer */
 .footer{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding-top:4px}
 .abtn{background:var(--card);border:1px solid var(--border);color:#555;padding:8px 16px;border-radius:7px;font-size:12px;font-family:var(--mono);letter-spacing:.04em;display:flex;align-items:center;gap:8px;cursor:pointer;transition:all .15s;box-shadow:0 1px 3px rgba(0,0,0,.05)}
 .abtn:hover{background:var(--text);color:#fff}
-.fr{display:flex;gap:8px;align-items:center;margin-left:auto}
-.clrb{background:transparent;border:none;color:var(--faint);font-size:10px;font-family:var(--mono);letter-spacing:.05em;cursor:pointer;transition:color .15s;display:none}
-.clrb:hover{color:var(--danger)}
 
-/* Modal */
+/* Modals */
 .ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);align-items:flex-end;justify-content:center;z-index:999;padding:0 16px 32px}
 .ov.open{display:flex}
 .modal{background:var(--card);border-radius:16px;padding:22px;width:100%;max-width:480px;box-shadow:0 8px 40px rgba(0,0,0,.15);font-family:var(--mono);display:flex;flex-direction:column;gap:10px;max-height:85vh;overflow-y:auto}
@@ -137,12 +152,30 @@ body{padding-top:var(--sat)}
 .bout{background:transparent;border:1px solid var(--border);color:var(--muted);padding:8px 14px;border-radius:7px;font-size:12px;font-family:var(--mono);cursor:pointer}
 .bpri{background:var(--text);border:none;color:#fff;padding:8px 18px;border-radius:7px;font-size:12px;font-family:var(--mono);font-weight:500;cursor:pointer;min-width:90px;transition:background .2s}
 .bpri.ok{background:var(--done)}
-
-/* Home steps */
 .hstep{display:flex;gap:14px;align-items:flex-start}
 .hico{width:32px;height:32px;border-radius:8px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;color:var(--text);font-weight:600}
 .htxt{font-size:13px;color:#444;line-height:1.5;padding-top:5px}
 .hnote{padding:10px 14px;background:#FFF8EC;border:1px solid var(--clients-br);border-radius:8px;font-size:11px;color:var(--clients);line-height:1.5}
+
+/* Settings modal */
+.set-row{display:flex;flex-direction:column;gap:6px}
+.set-lbl{font-size:11px;color:var(--muted);letter-spacing:.05em}
+.set-url{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:7px;font-family:var(--mono);font-size:11px;color:var(--text);background:#F8F7F5}
+.set-url:focus{outline:none;border-color:var(--mission)}
+.set-divider{height:1px;background:var(--border);margin:6px 0}
+.bkt-list{display:flex;flex-direction:column;gap:6px}
+.bkt-item{display:flex;align-items:center;gap:8px;padding:7px 10px;background:#F8F7F5;border:1px solid var(--border);border-radius:7px}
+.bkt-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.bkt-name{flex:1;font-size:12px;color:var(--text);letter-spacing:.02em}
+.bkt-edit-btn{font-family:var(--mono);font-size:10px;color:var(--muted);background:transparent;border:1px solid var(--border);padding:3px 8px;border-radius:4px;cursor:pointer;transition:all .15s}
+.bkt-edit-btn:hover{color:var(--mission);border-color:var(--mission-br)}
+.bkt-edit-row{display:flex;gap:6px;align-items:center;padding:6px 10px;background:#EEF4FF;border:1.5px solid var(--mission-br);border-radius:7px}
+.bkt-edit-inp{flex:1;background:transparent;border:none;font-family:var(--mono);font-size:12px;color:var(--text);padding:2px 0}
+.bkt-edit-inp:focus{outline:none}
+.bkt-save-btn{font-family:var(--mono);font-size:10px;background:var(--text);color:#fff;border:none;padding:4px 10px;border-radius:4px;cursor:pointer}
+.bkt-cancel-btn{font-family:var(--mono);font-size:10px;background:transparent;color:var(--muted);border:1px solid var(--border);padding:4px 8px;border-radius:4px;cursor:pointer}
+.add-bkt-btn{width:100%;padding:8px;background:transparent;border:1px dashed var(--border);border-radius:7px;font-family:var(--mono);font-size:11px;color:var(--muted);cursor:pointer;transition:all .15s;letter-spacing:.04em}
+.add-bkt-btn:hover{border-color:var(--mission-br);color:var(--mission)}
 </style>
 </head>
 <body>
@@ -151,52 +184,36 @@ body{padding-top:var(--sat)}
 <div id="setup">
   <div class="su-title">Welcome to Daily Tasks</div>
   <div class="su-sub">One-time setup · takes about 5 minutes</div>
-
   <div class="su-step">
     <div class="su-num">1</div>
     <div class="su-body">
       <div class="su-h">Create the Google Sheet</div>
-      <div class="su-d">Go to Google Drive → <strong>SELF OR COMM / 02 G_CMGT</strong>. Create a new Google Sheet and name it <strong>Daily Critical Activities</strong>.</div>
+      <div class="su-d">In Google Drive, create a new Sheet named <strong>Daily Critical Activities</strong>.</div>
     </div>
   </div>
   <div class="su-step">
     <div class="su-num">2</div>
     <div class="su-body">
       <div class="su-h">Open Apps Script</div>
-      <div class="su-d">Inside the Sheet, click <strong>Extensions → Apps Script</strong>. Delete any existing code in the editor.</div>
+      <div class="su-d">Inside the Sheet → <strong>Extensions → Apps Script</strong>. Delete existing code and paste in the Code.gs content. Save.</div>
     </div>
   </div>
   <div class="su-step">
     <div class="su-num">3</div>
     <div class="su-body">
-      <div class="su-h">Paste the backend code</div>
-      <div class="su-d">Open <strong>Code.gs</strong> (provided with this file). Copy everything and paste into the Apps Script editor. Press <strong>Cmd+S</strong> to save.</div>
+      <div class="su-h">Deploy as Web App</div>
+      <div class="su-d"><strong>Deploy → New deployment</strong> → Type: Web app → Execute as: Me → Who has access: Anyone → Deploy → authorise → copy the URL.</div>
     </div>
   </div>
   <div class="su-step">
     <div class="su-num">4</div>
     <div class="su-body">
-      <div class="su-h">Deploy as Web App</div>
-      <div class="su-d">
-        Click <strong>Deploy → New deployment</strong>. Choose:<br>
-        · Type: <strong>Web app</strong><br>
-        · Execute as: <strong>Me</strong><br>
-        · Who has access: <strong>Anyone</strong><br>
-        Click <strong>Deploy</strong>, authorise when prompted, then <strong>copy the Web App URL</strong>.
-      </div>
-    </div>
-  </div>
-  <div class="su-step">
-    <div class="su-num">5</div>
-    <div class="su-body">
-      <div class="su-h">Paste your Web App URL here</div>
-      <div class="su-d">Paste the URL you copied in step 4:</div>
+      <div class="su-h">Paste your Web App URL</div>
       <input id="urlInput" class="su-url" type="url" placeholder="https://script.google.com/macros/s/…/exec">
     </div>
   </div>
-
   <button class="su-btn" onclick="saveSetup()">Connect &amp; Load Tasks →</button>
-  <div class="su-note">Your tasks live in your Google Sheet in Drive.<br>The URL is saved only on this device.</div>
+  <div class="su-note">Tasks are stored in your Google Sheet. The URL is saved only on this device.</div>
 </div>
 
 <!-- APP -->
@@ -207,8 +224,7 @@ body{padding-top:var(--sat)}
       <div class="dt" id="dtStr"></div>
     </div>
     <div class="hdr-btns">
-      <button class="ibtn" onclick="openExport()">↓ Export</button>
-      <button class="ibtn" onclick="openHome()">⊕ Home</button>
+      <button class="ibtn" onclick="openSettings()">⚙</button>
     </div>
   </div>
 
@@ -231,15 +247,12 @@ body{padding-top:var(--sat)}
     <div class="fctrls" id="fctrls"></div>
     <div class="facts">
       <button class="bcn" onclick="cancelAdd()">Cancel</button>
-      <button class="bsv" id="savBtn" onclick="commitTask()">Add</button>
+      <button class="bsv" onclick="commitTask()">Add</button>
     </div>
   </div>
 
   <div class="footer">
     <button class="abtn" id="addBtn" onclick="startAdd()"><span style="font-size:16px">+</span> Add Task</button>
-    <div class="fr">
-      <button class="clrb" id="clrBtn" onclick="clearDone()">Clear done</button>
-    </div>
   </div>
 </div>
 
@@ -258,6 +271,28 @@ body{padding-top:var(--sat)}
   </div>
 </div>
 
+<!-- Settings Modal -->
+<div class="ov" id="setOv" onclick="closeSettings()">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="mrow">
+      <div><div class="mtitle">Settings</div><div class="msub">Update your Google Sheets connection</div></div>
+      <div class="mclose" onclick="closeSettings()">×</div>
+    </div>
+    <div class="set-row">
+      <div class="set-lbl">Web App URL</div>
+      <input class="set-url" id="setUrl" type="url" placeholder="https://script.google.com/macros/s/…/exec">
+    </div>
+    <div class="set-divider"></div>
+    <div class="set-lbl">Buckets</div>
+    <div class="bkt-list" id="bktList"></div>
+    <button class="add-bkt-btn" onclick="startAddBucket()">+ Add Bucket</button>
+    <div class="macts">
+      <button class="bout" onclick="closeSettings()">Cancel</button>
+      <button class="bpri" onclick="saveSettings()">Save &amp; Reconnect</button>
+    </div>
+  </div>
+</div>
+
 <!-- Home Modal -->
 <div class="ov" id="homeOv" onclick="closeHome()">
   <div class="modal" onclick="event.stopPropagation()">
@@ -271,53 +306,68 @@ body{padding-top:var(--sat)}
 </div>
 
 <script>
-const BUCKETS = ["Mission","Clients","Internal BCM"];
-const ICONS   = {Mission:"◈",Clients:"◇","Internal BCM":"◉"};
-const C       = {
-  Mission:        {a:"#4A7DC0",bg:"rgba(74,125,192,.08)",br:"rgba(74,125,192,.2)"},
-  Clients:        {a:"#B87A20",bg:"rgba(184,122,32,.08)",br:"rgba(184,122,32,.2)"},
-  "Internal BCM": {a:"#7A5FC0",bg:"rgba(122,95,192,.08)",br:"rgba(122,95,192,.2)"}
-};
+// ── Bucket colour palette (cycles for new buckets) ──
+const PALETTE = [
+  {a:"#4A7DC0",bg:"rgba(74,125,192,.08)",br:"rgba(74,125,192,.2)"},
+  {a:"#B87A20",bg:"rgba(184,122,32,.08)",br:"rgba(184,122,32,.2)"},
+  {a:"#7A5FC0",bg:"rgba(122,95,192,.08)",br:"rgba(122,95,192,.2)"},
+  {a:"#2A9B6A",bg:"rgba(42,155,106,.08)",br:"rgba(42,155,106,.2)"},
+  {a:"#C04A6A",bg:"rgba(192,74,106,.08)",br:"rgba(192,74,106,.2)"},
+  {a:"#7A8C20",bg:"rgba(122,140,32,.08)",br:"rgba(122,140,32,.2)"},
+];
+const ICON_SET = ["◈","◇","◉","◆","○","◎"];
+
+let BUCKETS = ["Mission","Clients","Internal BCM"];
+
+function getColor(b){ const i=BUCKETS.indexOf(b); return PALETTE[i>=0?i%PALETTE.length:0]; }
+function getIcon(b){  const i=BUCKETS.indexOf(b); return ICON_SET[i>=0?i%ICON_SET.length:0]; }
+
+function saveBuckets(){ localStorage.setItem("tasks_buckets", JSON.stringify(BUCKETS)); }
+function loadBuckets(){
+  const s=localStorage.getItem("tasks_buckets");
+  if(s){ try{ BUCKETS=JSON.parse(s); }catch(e){} }
+}
 
 const SEED = [
-  {id:1, bucket:"Mission",      text:"Write mission (Prof & Pers Agenda)",                      today:false,done:false,time:""},
-  {id:2, bucket:"Mission",      text:"Play with Claude",                                         today:true, done:false,time:""},
-  {id:3, bucket:"Mission",      text:"FS AI work: GenW, CustomerAI Council, AI POVs",           today:false,done:false,time:""},
-  {id:4, bucket:"Mission",      text:"BINDI",                                                    today:false,done:false,time:""},
-  {id:5, bucket:"Mission",      text:"NBFC MaaS / LMaaS / ERPMaaS / LOSaaS: Orientation with Lentra",today:false,done:false,time:""},
-  {id:6, bucket:"Mission",      text:"Learn: JavaScript",                                        today:false,done:false,time:""},
-  {id:7, bucket:"Clients",      text:"HDB – Sales Productivity",                                 today:true, done:false,time:""},
-  {id:8, bucket:"Clients",      text:"HDB – Process Mining",                                     today:false,done:false,time:""},
-  {id:9, bucket:"Clients",      text:"HDB – Mobile App 2.0",                                     today:false,done:false,time:""},
-  {id:10,bucket:"Clients",      text:"ICICI HFC – Resolve stalemate",                            today:false,done:false,time:""},
-  {id:11,bucket:"Clients",      text:"Nomura – FY26 plan: corrective actions",                  today:false,done:false,time:""},
-  {id:12,bucket:"Clients",      text:"TechM – Proposal",                                         today:false,done:false,time:""},
-  {id:13,bucket:"Clients",      text:"RBL – Ask Jaideep for meeting",                            today:false,done:false,time:""},
-  {id:14,bucket:"Clients",      text:"RBL – Respond to Ravi Pichan",                             today:false,done:false,time:""},
-  {id:15,bucket:"Clients",      text:"Zurich – Chase for addendum",                              today:false,done:false,time:""},
-  {id:16,bucket:"Clients",      text:"Yes Bank – Schedule session",                              today:false,done:false,time:""},
-  {id:17,bucket:"Clients",      text:"SIB Credit Cards",                                         today:false,done:false,time:""},
-  {id:18,bucket:"Clients",      text:"Religare Finvest",                                         today:false,done:false,time:""},
-  {id:19,bucket:"Clients",      text:"Tata Capital",                                             today:false,done:false,time:""},
-  {id:20,bucket:"Clients",      text:"Commercial Bank of Ceylon",                                today:false,done:false,time:""},
-  {id:21,bucket:"Clients",      text:"Religare – Sushilji meeting",                              today:false,done:false,time:""},
-  {id:22,bucket:"Clients",      text:"FINO – Meet Ketan",                                        today:false,done:false,time:""},
-  {id:23,bucket:"Internal BCM", text:"MANTHAN 360",                                              today:false,done:false,time:""},
-  {id:24,bucket:"Internal BCM", text:"FY26 Sales forecast & Pipeline review (Debu's ask)",      today:false,done:false,time:""},
-  {id:25,bucket:"Internal BCM", text:"DBM Survey",                                               today:false,done:false,time:""},
-  {id:26,bucket:"Internal BCM", text:"FY27 Focus accounts",                                      today:false,done:false,time:""},
-  {id:27,bucket:"Internal BCM", text:"SOFSI",                                                    today:true, done:false,time:""},
-  {id:28,bucket:"Internal BCM", text:"SatSure",                                                  today:false,done:false,time:""},
-  {id:29,bucket:"Internal BCM", text:"Banking: Corridor plan – Netherlands, ASEAN",              today:false,done:false,time:""}
+  {id:1, bucket:"Mission",      text:"Write mission (Prof & Pers Agenda)",                      today:false,time:""},
+  {id:2, bucket:"Mission",      text:"Play with Claude",                                         today:true, time:""},
+  {id:3, bucket:"Mission",      text:"FS AI work: GenW, CustomerAI Council, AI POVs",           today:false,time:""},
+  {id:4, bucket:"Mission",      text:"BINDI",                                                    today:false,time:""},
+  {id:5, bucket:"Mission",      text:"NBFC MaaS / LMaaS / ERPMaaS / LOSaaS: Orientation with Lentra",today:false,time:""},
+  {id:6, bucket:"Mission",      text:"Learn: JavaScript",                                        today:false,time:""},
+  {id:7, bucket:"Clients",      text:"HDB – Sales Productivity",                                 today:true, time:""},
+  {id:8, bucket:"Clients",      text:"HDB – Process Mining",                                     today:false,time:""},
+  {id:9, bucket:"Clients",      text:"HDB – Mobile App 2.0",                                     today:false,time:""},
+  {id:10,bucket:"Clients",      text:"ICICI HFC – Resolve stalemate",                            today:false,time:""},
+  {id:11,bucket:"Clients",      text:"Nomura – FY26 plan: corrective actions",                  today:false,time:""},
+  {id:12,bucket:"Clients",      text:"TechM – Proposal",                                         today:false,time:""},
+  {id:13,bucket:"Clients",      text:"RBL – Ask Jaideep for meeting",                            today:false,time:""},
+  {id:14,bucket:"Clients",      text:"RBL – Respond to Ravi Pichan",                             today:false,time:""},
+  {id:15,bucket:"Clients",      text:"Zurich – Chase for addendum",                              today:false,time:""},
+  {id:16,bucket:"Clients",      text:"Yes Bank – Schedule session",                              today:false,time:""},
+  {id:17,bucket:"Clients",      text:"SIB Credit Cards",                                         today:false,time:""},
+  {id:18,bucket:"Clients",      text:"Religare Finvest",                                         today:false,time:""},
+  {id:19,bucket:"Clients",      text:"Tata Capital",                                             today:false,time:""},
+  {id:20,bucket:"Clients",      text:"Commercial Bank of Ceylon",                                today:false,time:""},
+  {id:21,bucket:"Clients",      text:"Religare – Sushilji meeting",                              today:false,time:""},
+  {id:22,bucket:"Clients",      text:"FINO – Meet Ketan",                                        today:false,time:""},
+  {id:23,bucket:"Internal BCM", text:"MANTHAN 360",                                              today:false,time:""},
+  {id:24,bucket:"Internal BCM", text:"FY26 Sales forecast & Pipeline review (Debu's ask)",      today:false,time:""},
+  {id:25,bucket:"Internal BCM", text:"DBM Survey",                                               today:false,time:""},
+  {id:26,bucket:"Internal BCM", text:"FY27 Focus accounts",                                      today:false,time:""},
+  {id:27,bucket:"Internal BCM", text:"SOFSI",                                                    today:true, time:""},
+  {id:28,bucket:"Internal BCM", text:"SatSure",                                                  today:false,time:""},
+  {id:29,bucket:"Internal BCM", text:"Banking: Corridor plan – Netherlands, ASEAN",              today:false,time:""}
 ];
 
-let tasks=[], filter="Today", collapsed={}, editId=null;
-let formBucket="Mission", formToday=false, formTime="";
-let saveTimer=null;
+let tasks=[], filter="Today", collapsed={}, saveTimer=null;
+let editingId=null; // which task row is in inline-edit mode
+let formBucket="Mission", formToday=false, formTime=""; // for add form
 let webAppUrl = localStorage.getItem("tasks_url")||"";
 
 // ── Boot ──
 window.onload = () => {
+  loadBuckets();
   document.getElementById("dtStr").textContent =
     new Date().toLocaleDateString("en-IN",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
   if (!webAppUrl) { document.getElementById("setup").classList.add("show"); }
@@ -328,15 +378,91 @@ window.onload = () => {
 // ── Setup ──
 function saveSetup() {
   const url = document.getElementById("urlInput").value.trim();
-  if (!url.startsWith("https://script.google.com")) {
-    alert("Please paste a valid Apps Script Web App URL.");
-    return;
-  }
+  if (!url.startsWith("https://script.google.com")) { alert("Please paste a valid Apps Script Web App URL."); return; }
   webAppUrl = url;
   localStorage.setItem("tasks_url", url);
   document.getElementById("setup").classList.remove("show");
   document.getElementById("app").classList.add("show");
   loadSheet();
+}
+
+// ── Settings ──
+function openSettings() {
+  document.getElementById("setUrl").value = webAppUrl;
+  renderBktList();
+  document.getElementById("setOv").classList.add("open");
+}
+function closeSettings() { document.getElementById("setOv").classList.remove("open"); }
+function saveSettings() {
+  const url = document.getElementById("setUrl").value.trim();
+  if (!url.startsWith("https://script.google.com")) { alert("Please paste a valid Apps Script Web App URL."); return; }
+  webAppUrl = url;
+  localStorage.setItem("tasks_url", url);
+  closeSettings();
+  loadSheet();
+}
+
+// ── Bucket Manager ──
+let editingBkt = null; // bucket name currently being renamed
+
+function renderBktList() {
+  const list = document.getElementById("bktList"); list.innerHTML="";
+  BUCKETS.forEach(b => {
+    if (editingBkt === b) {
+      // Edit row
+      const row = document.createElement("div"); row.className="bkt-edit-row";
+      const inp = document.createElement("input"); inp.className="bkt-edit-inp"; inp.value=b; inp.id="bkt-inp";
+      inp.onkeydown=e=>{ if(e.key==="Enter") commitRenameBucket(b); if(e.key==="Escape") cancelBktEdit(); };
+      const sv = document.createElement("button"); sv.className="bkt-save-btn"; sv.textContent="Save";
+      sv.onclick=()=>commitRenameBucket(b);
+      const cn = document.createElement("button"); cn.className="bkt-cancel-btn"; cn.textContent="Cancel";
+      cn.onclick=cancelBktEdit;
+      row.appendChild(inp); row.appendChild(sv); row.appendChild(cn);
+      list.appendChild(row);
+      setTimeout(()=>inp.focus(),50);
+    } else {
+      const c = getColor(b);
+      const item = document.createElement("div"); item.className="bkt-item";
+      const dot = document.createElement("div"); dot.className="bkt-dot"; dot.style.background=c.a;
+      const nm  = document.createElement("div"); nm.className="bkt-name"; nm.textContent=b;
+      const btn = document.createElement("button"); btn.className="bkt-edit-btn"; btn.textContent="Rename";
+      btn.onclick=()=>{ editingBkt=b; renderBktList(); };
+      item.appendChild(dot); item.appendChild(nm); item.appendChild(btn);
+      list.appendChild(item);
+    }
+  });
+}
+
+function cancelBktEdit() { editingBkt=null; renderBktList(); }
+
+function commitRenameBucket(oldName) {
+  const inp = document.getElementById("bkt-inp");
+  const newName = inp ? inp.value.trim() : "";
+  if (!newName) { cancelBktEdit(); return; }
+  if (newName === oldName) { cancelBktEdit(); return; }
+  if (BUCKETS.includes(newName)) { alert("A bucket with that name already exists."); return; }
+  // Rename in BUCKETS list
+  BUCKETS = BUCKETS.map(b => b===oldName ? newName : b);
+  // Rename in all tasks
+  tasks = tasks.map(t => t.bucket===oldName ? {...t, bucket:newName} : t);
+  // Update filter if needed
+  if (filter===oldName) filter=newName;
+  saveBuckets();
+  editingBkt=null;
+  renderBktList();
+  delaySave();
+  render();
+}
+
+function startAddBucket() {
+  const name = prompt("New bucket name:");
+  if (!name || !name.trim()) return;
+  const trimmed = name.trim();
+  if (BUCKETS.includes(trimmed)) { alert("A bucket with that name already exists."); return; }
+  BUCKETS.push(trimmed);
+  saveBuckets();
+  renderBktList();
+  render();
 }
 
 // ── Sync ──
@@ -354,70 +480,85 @@ async function loadSheet() {
     const d = await r.json();
     if (d.status==="ok") { tasks=d.tasks; sync("saved","✓ Loaded"); render(); }
     else throw new Error(d.message);
-  } catch(e) { sync("err","⚠ Could not load — check your URL"); }
+  } catch(e) { sync("err","⚠ Could not load — tap ⚙ to check your URL"); }
 }
 
 async function saveSheet() {
-sync("saving","Saving…");
-try {
-const encoded = encodeURIComponent(JSON.stringify(tasks));
-const r = await fetch(webAppUrl + "?action=save&data=" + encoded);
-const d = await r.json();
-if (d.status==="ok") sync("saved","✓ Saved to Google Sheets");
-else throw new Error(d.message);
-} catch(e) { sync("err","⚠ Save failed"); }
+  sync("saving","Saving…");
+  try {
+    const encoded = encodeURIComponent(JSON.stringify(tasks));
+    const r = await fetch(webAppUrl + "?action=save&data=" + encoded);
+    const d = await r.json();
+    if (d.status==="ok") sync("saved","✓ Saved to Google Sheets");
+    else throw new Error(d.message);
+  } catch(e) { sync("err","⚠ Save failed"); }
 }
 
 function delaySave() { clearTimeout(saveTimer); saveTimer=setTimeout(saveSheet,800); }
 
 // ── Mutations ──
 function mut(fn){ fn(); delaySave(); render(); }
-const find = id => tasks.find(t=>t.id===id);
-const toggleDone  = id => mut(()=>{ const t=find(id); t.done=!t.done; });
-const toggleToday = id => mut(()=>{ const t=find(id); t.today=!t.today; });
-const removeTask  = id => mut(()=>{ tasks=tasks.filter(t=>t.id!==id); });
-const clearDone   = ()  => mut(()=>{ tasks=tasks.filter(t=>!t.done); });
+const find      = id => tasks.find(t=>t.id===id);
+const removeTask= id => { if(confirm("Delete this task?")) mut(()=>{ tasks=tasks.filter(t=>t.id!==id); }); };
+const toggleToday=id => mut(()=>{ const t=find(id); t.today=!t.today; });
 
-// ── Form ──
+// ── Inline Edit ──
+function startInlineEdit(id) {
+  editingId = id;
+  render(); // re-render so that row becomes edit mode
+  setTimeout(()=>{
+    const inp = document.getElementById("einput-"+id);
+    if (inp) inp.focus();
+  }, 50);
+}
+
+function cancelInlineEdit() { editingId=null; render(); }
+
+function commitInlineEdit(id) {
+  const inp = document.getElementById("einput-"+id);
+  if (!inp || !inp.value.trim()) { cancelInlineEdit(); return; }
+  const bkt = document.querySelector(".eb-bkt.on-active")?.dataset.bucket;
+  const tod = document.querySelector(".eb-tod.on-active") !== null;
+  const tim = document.getElementById("etime-"+id)?.value || "";
+  mut(()=>{
+    const t = find(id);
+    t.text   = inp.value.trim();
+    if (bkt) t.bucket = bkt;
+    t.today  = tod;
+    t.time   = tim;
+  });
+  editingId = null;
+}
+
+// ── Add Form ──
 function startAdd() {
-  editId=null;
+  editingId = null;
   formBucket = BUCKETS.includes(filter)?filter:"Mission";
   formToday  = filter==="Today";
   formTime   = "";
   document.getElementById("taskIn").value="";
-  document.getElementById("savBtn").textContent="Add";
-  document.getElementById("aform").classList.add("show");
-  document.getElementById("addBtn").style.display="none";
-  buildFCtrls();
-  setTimeout(()=>document.getElementById("taskIn").focus(),50);
-}
-function startEdit(id) {
-  const t=find(id); if(!t||t.done) return;
-  editId=id; formBucket=t.bucket; formToday=t.today; formTime=t.time||"";
-  document.getElementById("taskIn").value=t.text;
-  document.getElementById("savBtn").textContent="Update";
   document.getElementById("aform").classList.add("show");
   document.getElementById("addBtn").style.display="none";
   buildFCtrls();
   setTimeout(()=>document.getElementById("taskIn").focus(),50);
 }
 function cancelAdd() {
-  editId=null;
   document.getElementById("aform").classList.remove("show");
   document.getElementById("addBtn").style.display="flex";
 }
 function commitTask() {
   const txt=document.getElementById("taskIn").value.trim(); if(!txt) return;
-  if (editId) mut(()=>{ const t=find(editId); t.text=txt; t.bucket=formBucket; t.today=formToday; t.time=formTime; });
-  else mut(()=>{ tasks.push({id:Date.now(),bucket:formBucket,text:txt,today:formToday,done:false,time:formTime}); });
+  mut(()=>{ tasks.push({id:Date.now(),bucket:formBucket,text:txt,today:formToday,time:formTime}); });
   cancelAdd();
 }
 function buildFCtrls() {
   const d=document.getElementById("fctrls"); d.innerHTML="";
-  const cls={Mission:"onm",Clients:"onc","Internal BCM":"onb"};
   BUCKETS.forEach(b=>{
-    const btn=document.createElement("button"); btn.className="fb"+(formBucket===b?" "+cls[b]:"");
-    btn.textContent=b; btn.onclick=()=>{ formBucket=b; buildFCtrls(); }; d.appendChild(btn);
+    const c=getColor(b);
+    const btn=document.createElement("button");
+    btn.className="fb"; btn.textContent=b;
+    if(formBucket===b) btn.style.cssText=`background:${c.bg};border-color:${c.br};color:${c.a}`;
+    btn.onclick=()=>{ formBucket=b; buildFCtrls(); }; d.appendChild(btn);
   });
   const td=document.createElement("button"); td.className="fb"+(formToday?" ont":"");
   td.textContent="◎ Today"; td.onclick=()=>{ formToday=!formToday; buildFCtrls(); }; d.appendChild(td);
@@ -428,39 +569,35 @@ function buildFCtrls() {
 // ── Render ──
 function render() {
   renderProg(); renderFilters(); renderGroups();
-  const vd=visible().filter(t=>t.done).length;
-  const cb=document.getElementById("clrBtn");
-  cb.style.display=vd>0?"block":"none"; cb.textContent="Clear "+vd+" done";
 }
+
 const visible = () =>
   filter==="Today"?tasks.filter(t=>t.today):filter==="All"?tasks:tasks.filter(t=>t.bucket===filter);
-const sortB = arr=>[...arr].sort((a,b)=>{
-  if(a.done!==b.done) return a.done?1:-1;
-  if(a.today!==b.today) return b.today?1:-1;
-  return 0;
-});
+const sortB = arr=>[...arr].sort((a,b)=> b.today - a.today);
 
 function renderProg() {
-  const td=tasks.filter(t=>t.today), dn=td.filter(t=>t.done).length, tot=td.length;
-  const all=(dn===tot&&tot>0);
-  document.getElementById("progCt").textContent=dn+" / "+tot+" done";
-  document.getElementById("progCt").style.color=all?"#4A9B6A":"#D4973B";
-  document.getElementById("progFill").style.width=tot?(dn/tot*100)+"%":"0%";
-  document.getElementById("progFill").style.background=all?"#4A9B6A":"#D4973B";
+  const td=tasks.filter(t=>t.today), tot=td.length;
+  document.getElementById("progCt").textContent=tot+" task"+(tot!==1?"s":"")+" today";
+  document.getElementById("progCt").style.color="var(--today)";
+  document.getElementById("progFill").style.width=tot?"100%":"0%";
   const ch=document.getElementById("todayChips"); ch.innerHTML="";
   td.forEach(t=>{
-    const c=C[t.bucket], el=document.createElement("span"); el.className="chip";
+    const c=getColor(t.bucket), el=document.createElement("span"); el.className="chip";
     el.textContent=t.text;
-    el.style.cssText=`color:${t.done?"#ABABAB":c.a};background:${t.done?"#F5F5F5":c.bg};border-color:${t.done?"#EEE":c.br};${t.done?"text-decoration:line-through":""}`;
+    el.style.cssText=`color:${c.a};background:${c.bg};border-color:${c.br}`;
     ch.appendChild(el);
   });
 }
 
 function renderFilters() {
   const f=document.getElementById("filters"); f.innerHTML="";
-  [{k:"Today",l:"◎ Today"},{k:"Mission",l:"◈ Mission"},{k:"Clients",l:"◇ Clients"},{k:"Internal BCM",l:"◉ BCM"},{k:"All",l:"All"}].forEach(({k,l})=>{
+  const items=[{k:"Today",l:"◎ Today"},{k:"All",l:"All"}];
+  BUCKETS.forEach(b=>items.splice(items.length-1,0,{k:b,l:getIcon(b)+" "+b}));
+  items.forEach(({k,l})=>{
     const btn=document.createElement("button"); btn.className="pill";
-    if(filter===k) btn.classList.add(k==="Mission"?"onm":k==="Clients"?"onc":k==="Internal BCM"?"onb":"on");
+    const isB=BUCKETS.includes(k);
+    if(filter===k) btn.classList.add(isB?"onm":"on"); // onm uses accent color via inline style below
+    if(filter===k&&isB){ const c=getColor(k); btn.style.cssText=`border-color:${c.br};background:${c.bg};color:${c.a}`; }
     btn.textContent=l; btn.onclick=()=>{ filter=k; render(); }; f.appendChild(btn);
   });
 }
@@ -469,39 +606,88 @@ function renderGroups() {
   const w=document.getElementById("groups"); w.innerHTML="";
   const vis=visible();
   const grps=BUCKETS.map(b=>({b,tasks:sortB(vis.filter(t=>t.bucket===b))})).filter(g=>g.tasks.length);
-  if(!grps.length){ const e=document.createElement("div"); e.className="empty"; e.textContent=filter==="Today"?"No tasks tagged for today.":"No tasks here."; w.appendChild(e); return; }
+  if(!grps.length){
+    const e=document.createElement("div"); e.className="empty";
+    e.textContent=filter==="Today"?"No tasks tagged for today.":"No tasks here."; w.appendChild(e); return;
+  }
   grps.forEach(({b,tasks:bt})=>{
-    const c=C[b], isCol=!!collapsed[b], dn=bt.filter(t=>t.done).length;
+    const c=getColor(b), isCol=!!collapsed[b];
     const grp=document.createElement("div"); grp.className="bgrp";
     const hdr=document.createElement("div"); hdr.className="bhdr";
-    hdr.innerHTML=`<span class="bico" style="color:${c.a}">${ICONS[b]}</span><span class="bnm" style="color:${c.a}">${b}</span><span class="bct">${dn}/${bt.length}</span><div class="bline"></div><span class="bchev">${isCol?"▸":"▾"}</span>`;
+    hdr.innerHTML=`<span class="bico" style="color:${c.a}">${getIcon(b)}</span><span class="bnm" style="color:${c.a}">${b}</span><span class="bct">${bt.length}</span><div class="bline"></div><span class="bchev">${isCol?"▸":"▾"}</span>`;
     hdr.onclick=()=>{ collapsed[b]=!collapsed[b]; render(); }; grp.appendChild(hdr);
     if(!isCol){
       const list=document.createElement("div"); list.className="tlist";
-      bt.forEach(t=>list.appendChild(mkRow(t,c))); grp.appendChild(list);
+      bt.forEach(t=>list.appendChild(t.id===editingId ? mkEditRow(t,c) : mkRow(t,c)));
+      grp.appendChild(list);
     }
     w.appendChild(grp);
   });
 }
 
+// Normal task row
 function mkRow(t,c){
-  const row=document.createElement("div"); row.className="trow"+(t.done?" dn":"");
-  const chk=document.createElement("div"); chk.className="chk"+(t.done?" on":"");
-  chk.style.borderColor=t.done?c.a:"#D0D0D0";
-  chk.innerHTML=t.done?`<svg width="9" height="7" viewBox="0 0 9 7"><polyline points="1,3.5 3.5,6 8,1" fill="none" stroke="${c.a}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`:"";
-  chk.onclick=()=>toggleDone(t.id); row.appendChild(chk);
+  const row=document.createElement("div"); row.className="trow";
+  // Text
   const body=document.createElement("div"); body.className="tbody";
   const txt=document.createElement("span"); txt.className="ttxt"; txt.textContent=t.text;
-  if(!t.done) txt.onclick=()=>startEdit(t.id); body.appendChild(txt);
+  txt.onclick=()=>startInlineEdit(t.id); body.appendChild(txt);
   if(t.time){ const ti=document.createElement("span"); ti.className="ttime"; ti.textContent=fmtT(t.time); body.appendChild(ti); }
   row.appendChild(body);
+  // Today button
   const tdb=document.createElement("div"); tdb.className="tdb"+(t.today?" act":"");
   tdb.innerHTML=`<span class="dot"></span>${t.today?"Today":""}`;
   tdb.onclick=()=>toggleToday(t.id); row.appendChild(tdb);
+  // Delete — always visible
   const del=document.createElement("div"); del.className="del"; del.textContent="×";
   del.onclick=()=>removeTask(t.id); row.appendChild(del);
   return row;
 }
+
+// Inline edit row
+function mkEditRow(t,c){
+  const row=document.createElement("div"); row.className="trow-edit";
+  // Input
+  const inp=document.createElement("input"); inp.type="text"; inp.className="edit-input";
+  inp.id="einput-"+t.id; inp.value=t.text;
+  inp.onkeydown=e=>{ if(e.key==="Enter") commitInlineEdit(t.id); if(e.key==="Escape") cancelInlineEdit(); };
+  row.appendChild(inp);
+  // Controls
+  const ctrls=document.createElement("div"); ctrls.className="edit-ctrls";
+  const bktCls={};
+  BUCKETS.forEach(b=>bktCls[b]="onm"); // fallback, we use inline style instead
+  BUCKETS.forEach(b=>{
+    const c=getColor(b);
+    const btn=document.createElement("button");
+    btn.className="eb eb-bkt"+(t.bucket===b?" on-active":"");
+    if(t.bucket===b) btn.style.cssText=`background:${c.bg};border-color:${c.br};color:${c.a}`;
+    btn.dataset.bucket=b; btn.textContent=b;
+    btn.onclick=()=>{
+      row.querySelectorAll(".eb-bkt").forEach(x=>{ x.className="eb eb-bkt"; x.style.cssText=""; });
+      btn.className="eb eb-bkt on-active";
+      btn.style.cssText=`background:${c.bg};border-color:${c.br};color:${c.a}`;
+    };
+    ctrls.appendChild(btn);
+  });
+  const td=document.createElement("button");
+  td.className="eb eb-tod"+(t.today?" on-active ont":"");
+  td.textContent="◎ Today";
+  td.onclick=()=>{ td.classList.toggle("on-active"); td.classList.toggle("ont"); };
+  ctrls.appendChild(td);
+  const ti=document.createElement("input"); ti.type="time"; ti.className="etime";
+  ti.id="etime-"+t.id; ti.value=t.time||"";
+  ctrls.appendChild(ti);
+  row.appendChild(ctrls);
+  // Actions
+  const acts=document.createElement("div"); acts.className="edit-acts";
+  const canc=document.createElement("button"); canc.className="e-cancel"; canc.textContent="Cancel";
+  canc.onclick=cancelInlineEdit; acts.appendChild(canc);
+  const sav=document.createElement("button"); sav.className="e-save"; sav.textContent="Save";
+  sav.onclick=()=>commitInlineEdit(t.id); acts.appendChild(sav);
+  row.appendChild(acts);
+  return row;
+}
+
 function fmtT(t){ if(!t) return ""; const[h,m]=t.split(":").map(Number); return `${h%12||12}:${String(m).padStart(2,"0")} ${h>=12?"PM":"AM"}`; }
 
 // ── Export ──
@@ -510,12 +696,12 @@ function openExport(){
   let o=`DAILY CRITICAL ACTIVITIES\n${dt}\n${"═".repeat(40)}\n\n`;
   BUCKETS.forEach(b=>{
     const bt=tasks.filter(t=>t.bucket===b); if(!bt.length) return;
-    o+=`${ICONS[b]} ${b.toUpperCase()}\n${"─".repeat(30)}\n`;
-    bt.forEach(t=>{ o+=`${t.done?"[✓]":"[ ]"} ${t.text}${t.time?" @ "+fmtT(t.time):""}${t.today?"  ◎ TODAY":""}\n`; });
+    o+=`${getIcon(b)} ${b.toUpperCase()}\n${"─".repeat(30)}\n`;
+    bt.forEach(t=>{ o+=`[ ] ${t.text}${t.time?" @ "+fmtT(t.time):""}${t.today?"  ◎ TODAY":""}\n`; });
     o+="\n";
   });
   const td=tasks.filter(t=>t.today);
-  o+=`${"─".repeat(30)}\nToday: ${td.filter(t=>t.done).length}/${td.length} done\nExported: ${new Date().toLocaleTimeString("en-IN")}`;
+  o+=`${"─".repeat(30)}\nToday: ${td.length} task${td.length!==1?"s":""}\nExported: ${new Date().toLocaleTimeString("en-IN")}`;
   document.getElementById("expArea").value=o;
   document.getElementById("cpyBtn").textContent="Copy All"; document.getElementById("cpyBtn").classList.remove("ok");
   document.getElementById("expOv").classList.add("open");
@@ -533,12 +719,12 @@ function buildHomeSteps(){
   const ios=/iPhone|iPad|iPod/i.test(navigator.userAgent);
   const and=/Android/i.test(navigator.userAgent);
   const steps=ios?[
-    {i:"↑",t:"Tap the <strong>Share</strong> button in Safari's bottom toolbar (box with arrow)."},
+    {i:"↑",t:"Tap the <strong>Share</strong> button in Safari's bottom toolbar."},
     {i:"＋",t:"Scroll and tap <strong>Add to Home Screen</strong>."},
-    {i:"✓",t:"Tap <strong>Add</strong> — the icon appears on your home screen."}
+    {i:"✓",t:"Tap <strong>Add</strong>."}
   ]:and?[
     {i:"⋮",t:"Tap the <strong>three-dot menu</strong> in Chrome."},
-    {i:"＋",t:"Tap <strong>Add to Home screen</strong> or <strong>Install app</strong>."},
+    {i:"＋",t:"Tap <strong>Add to Home screen</strong>."},
     {i:"✓",t:"Tap <strong>Add</strong>."}
   ]:[
     {i:"⋮",t:"In Chrome, click the <strong>three-dot menu</strong>."},
@@ -547,14 +733,13 @@ function buildHomeSteps(){
   ];
   const w=document.getElementById("homeSteps");
   steps.forEach(s=>{ const r=document.createElement("div"); r.className="hstep"; r.innerHTML=`<div class="hico">${s.i}</div><div class="htxt">${s.t}</div>`; w.appendChild(r); });
-  if(ios){ const n=document.createElement("div"); n.className="hnote"; n.innerHTML="Open this file in <strong>Safari</strong> from the <strong>Files app → iCloud Drive</strong>. Then add to home screen."; w.appendChild(n); }
+  if(ios){ const n=document.createElement("div"); n.className="hnote"; n.innerHTML="Make sure you are in <strong>Safari</strong>. Open this page from GitHub Pages, not from a local file."; w.appendChild(n); }
 }
 function openHome(){ document.getElementById("homeOv").classList.add("open"); }
 function closeHome(){ document.getElementById("homeOv").classList.remove("open"); }
 
 document.addEventListener("keydown",e=>{
-  if(e.key==="Escape"){ cancelAdd(); closeExport(); closeHome(); }
-  if(e.key==="Enter"&&document.getElementById("aform").classList.contains("show")) commitTask();
+  if(e.key==="Escape"){ cancelAdd(); cancelInlineEdit(); closeExport(); closeHome(); closeSettings(); }
 });
 </script>
 </body>
