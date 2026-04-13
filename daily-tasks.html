@@ -11,37 +11,21 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:#F2F1EE; --card:#fff; --border:#E8E8E4; --text:#1A1A2E;
-  --muted:#ABABAB; --faint:#CECECE;
-  --mission:#4A7DC0; --mission-bg:rgba(74,125,192,.08); --mission-br:rgba(74,125,192,.2);
-  --clients:#B87A20; --clients-bg:rgba(184,122,32,.08); --clients-br:rgba(184,122,32,.2);
-  --bcm:#7A5FC0; --bcm-bg:rgba(122,95,192,.08); --bcm-br:rgba(122,95,192,.2);
-  --today:#D4973B; --done:#4A9B6A; --danger:#E05A3A;
-  --mono:'DM Mono','Courier New',monospace;
-  --font-family:'Outfit',sans-serif;
-  --sat:env(safe-area-inset-top,0px);
+--bg:#F2F1EE; --card:#fff; --border:#E8E8E4; --text:#1A1A2E;
+--muted:#ABABAB; --faint:#CECECE;
+--mission:#4A7DC0; --mission-bg:rgba(74,125,192,.08); --mission-br:rgba(74,125,192,.2);
+--clients:#B87A20; --clients-bg:rgba(184,122,32,.08); --clients-br:rgba(184,122,32,.2);
+--bcm:#7A5FC0; --bcm-bg:rgba(122,95,192,.08); --bcm-br:rgba(122,95,192,.2);
+--today:#D4973B; --done:#4A9B6A; --danger:#E05A3A;
+--mono:'DM Mono','Courier New',monospace;
+--font-family:'Outfit',sans-serif;
+--sat:env(safe-area-inset-top,0px);
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{min-height:100%;background:var(--bg);font-family:var(--mono);color:var(--text)}
 body{padding-top:var(--sat)}
 
-/* SETUP */
-#setup{display:none;position:fixed;inset:0;background:var(--bg);z-index:999;padding:36px 22px 40px;overflow-y:auto}
-#setup.show{display:block}
-.su-title{font-family:var(--serif);font-size:22px;font-weight:700;margin-bottom:4px}
-.su-sub{font-size:10px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:28px}
-.su-step{display:flex;gap:14px;margin-bottom:20px}
-.su-num{width:28px;height:28px;border-radius:8px;background:var(--text);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;flex-shrink:0;margin-top:2px}
-.su-body .su-h{font-size:13px;font-weight:500;margin-bottom:4px}
-.su-body .su-d{font-size:11px;color:var(--muted);line-height:1.6}
-.su-url{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-family:var(--mono);font-size:12px;color:var(--text);background:var(--card);margin-top:8px;display:block}
-.su-url:focus{outline:none;border-color:var(--mission)}
-.su-btn{width:100%;margin-top:22px;padding:13px;background:var(--text);color:#fff;border:none;border-radius:10px;font-family:var(--mono);font-size:13px;font-weight:500;cursor:pointer}
-.su-note{font-size:10px;color:var(--faint);margin-top:10px;text-align:center;line-height:1.5}
-
-/* APP */
-#app{display:none;max-width:600px;margin:0 auto;padding:28px 18px 100px}
-#app.show{display:block}
+#app{max-width:600px;margin:0 auto;padding:28px 18px 100px}
 
 .hdr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px}
 .hdr h1{font-family:var(--serif);font-size:23px;font-weight:700;letter-spacing:-.3px}
@@ -53,7 +37,6 @@ body{padding-top:var(--sat)}
 .sync{font-size:10px;text-align:right;height:14px;margin-bottom:8px;letter-spacing:.04em;transition:color .3s;color:var(--faint)}
 .sync.saving{color:var(--today)}.sync.saved{color:var(--done)}.sync.err{color:var(--danger)}
 
-/* Progress */
 .prog{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:18px;box-shadow:0 1px 4px rgba(0,0,0,.05)}
 .prog-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
 .prog-lbl{font-size:10px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
@@ -63,15 +46,10 @@ body{padding-top:var(--sat)}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
 .chip{font-size:10px;padding:3px 9px;border-radius:10px;border:1px solid;letter-spacing:.03em}
 
-/* Filters */
 .filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
 .pill{font-family:var(--mono);font-size:10px;letter-spacing:.07em;padding:5px 12px;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--muted);cursor:pointer;transition:all .15s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
-.pill.on {border-color:rgba(26,26,46,.2);background:rgba(26,26,46,.07);color:var(--text)}
-.pill.onm{border-color:var(--mission-br);background:var(--mission-bg);color:var(--mission)}
-.pill.onc{border-color:var(--clients-br);background:var(--clients-bg);color:var(--clients)}
-.pill.onb{border-color:var(--bcm-br);background:var(--bcm-bg);color:var(--bcm)}
+.pill.on{border-color:rgba(26,26,46,.2);background:rgba(26,26,46,.07);color:var(--text)}
 
-/* Buckets & tasks */
 .bgrp{margin-bottom:18px}
 .bhdr{display:flex;align-items:center;gap:8px;margin-bottom:8px;cursor:pointer;user-select:none}
 .bico{font-size:13px}.bnm{font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:500}
@@ -80,7 +58,6 @@ body{padding-top:var(--sat)}
 .bchev{font-size:9px;color:var(--faint)}
 .tlist{display:flex;flex-direction:column;gap:5px}
 
-/* Normal task row */
 .trow{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:7px;background:var(--card);border:1px solid var(--border);box-shadow:0 1px 3px rgba(0,0,0,.04);transition:box-shadow .15s}
 .trow:hover{box-shadow:0 2px 8px rgba(0,0,0,.09)}
 .tbody{flex:1;min-width:0}
@@ -88,26 +65,20 @@ body{padding-top:var(--sat)}
 .ttxt:hover{color:var(--mission)}
 .ttime{font-size:10px;color:var(--muted);letter-spacing:.04em}
 
-/* Today button */
 .tdb{font-family:var(--mono);font-size:10px;flex-shrink:0;cursor:pointer;border-radius:20px;padding:3px 8px;border:1px solid transparent;color:transparent;transition:all .15s;display:flex;align-items:center;gap:5px;background:transparent;white-space:nowrap}
 .tdb .dot{width:7px;height:7px;border-radius:50%;background:#D0D0D0;flex-shrink:0;transition:background .15s}
 .tdb.act{color:var(--clients);border-color:rgba(184,122,32,.35);background:rgba(212,151,59,.1)}
 .tdb.act .dot{background:var(--today)}
 .trow:hover .tdb:not(.act){color:#BBBBBB;border-color:#E0E0E0}
 
-/* Delete button — always visible, bold red */
 .del{cursor:pointer;color:#DDBBBB;font-size:20px;line-height:1;flex-shrink:0;transition:color .15s;padding:0 3px;font-weight:300}
 .del:hover{color:var(--danger)}
 
-/* Inline edit row */
 .trow-edit{border-radius:7px;background:var(--card);border:1.5px solid var(--mission-br);box-shadow:0 2px 10px rgba(74,125,192,.12);padding:10px 12px;display:flex;flex-direction:column;gap:10px}
 .edit-input{background:transparent;border:none;border-bottom:1px solid #EBEBEB;color:var(--text);font-size:13px;padding:4px 0;font-family:var(--mono);width:100%}
 .edit-input:focus{outline:none;border-bottom-color:var(--mission)}
 .edit-ctrls{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
 .eb{font-family:var(--mono);font-size:9px;letter-spacing:.07em;text-transform:uppercase;padding:4px 8px;border-radius:4px;border:1px solid #E0E0E0;background:transparent;color:var(--muted);cursor:pointer;transition:all .15s}
-.eb.onm{background:var(--mission-bg);border-color:var(--mission-br);color:var(--mission)}
-.eb.onc{background:var(--clients-bg);border-color:var(--clients-br);color:var(--clients)}
-.eb.onb{background:var(--bcm-bg);border-color:var(--bcm-br);color:var(--bcm)}
 .eb.ont{background:rgba(184,122,32,.08);border-color:rgba(184,122,32,.35);color:var(--clients)}
 .etime{font-family:var(--mono);font-size:10px;padding:4px 7px;border-radius:4px;border:1px solid #E0E0E0;background:transparent;color:var(--muted)}
 .etime:focus{outline:none}
@@ -117,16 +88,12 @@ body{padding-top:var(--sat)}
 
 .empty{padding:28px 0;text-align:center;color:var(--faint);font-size:12px}
 
-/* Add form */
 .aform{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,.06);flex-direction:column;gap:12px;display:none}
 .aform.show{display:flex}
 .aform input[type=text]{background:transparent;border:none;border-bottom:1px solid #EBEBEB;color:var(--text);font-size:13px;padding:6px 0;font-family:var(--mono);width:100%}
 .aform input[type=text]:focus{outline:none}
 .fctrls{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
 .fb{font-family:var(--mono);font-size:9px;letter-spacing:.07em;text-transform:uppercase;padding:4px 9px;border-radius:4px;border:1px solid #E0E0E0;background:transparent;color:var(--muted);cursor:pointer;transition:all .15s}
-.fb.onm{background:var(--mission-bg);border-color:var(--mission-br);color:var(--mission)}
-.fb.onc{background:var(--clients-bg);border-color:var(--clients-br);color:var(--clients)}
-.fb.onb{background:var(--bcm-bg);border-color:var(--bcm-br);color:var(--bcm)}
 .fb.ont{background:rgba(184,122,32,.08);border-color:rgba(184,122,32,.35);color:var(--clients)}
 .ftime{font-family:var(--mono);font-size:10px;padding:4px 7px;border-radius:4px;border:1px solid #E0E0E0;background:transparent;color:var(--muted)}
 .ftime:focus{outline:none}
@@ -134,12 +101,10 @@ body{padding-top:var(--sat)}
 .bcn{background:transparent;border:1px solid var(--border);color:var(--muted);padding:6px 14px;border-radius:4px;font-size:11px;font-family:var(--mono);cursor:pointer}
 .bsv{background:var(--text);border:none;color:#fff;padding:6px 16px;border-radius:4px;font-size:11px;font-family:var(--mono);font-weight:500;cursor:pointer}
 
-/* Footer */
 .footer{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding-top:4px}
 .abtn{background:var(--card);border:1px solid var(--border);color:#555;padding:8px 16px;border-radius:7px;font-size:12px;font-family:var(--mono);letter-spacing:.04em;display:flex;align-items:center;gap:8px;cursor:pointer;transition:all .15s;box-shadow:0 1px 3px rgba(0,0,0,.05)}
 .abtn:hover{background:var(--text);color:#fff}
 
-/* Modals */
 .ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);align-items:flex-end;justify-content:center;z-index:999;padding:0 16px 32px}
 .ov.open{display:flex}
 .modal{background:var(--card);border-radius:16px;padding:22px;width:100%;max-width:480px;box-shadow:0 8px 40px rgba(0,0,0,.15);font-family:var(--mono);display:flex;flex-direction:column;gap:10px;max-height:85vh;overflow-y:auto}
@@ -152,17 +117,21 @@ body{padding-top:var(--sat)}
 .bout{background:transparent;border:1px solid var(--border);color:var(--muted);padding:8px 14px;border-radius:7px;font-size:12px;font-family:var(--mono);cursor:pointer}
 .bpri{background:var(--text);border:none;color:#fff;padding:8px 18px;border-radius:7px;font-size:12px;font-family:var(--mono);font-weight:500;cursor:pointer;min-width:90px;transition:background .2s}
 .bpri.ok{background:var(--done)}
-.hstep{display:flex;gap:14px;align-items:flex-start}
-.hico{width:32px;height:32px;border-radius:8px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;color:var(--text);font-weight:600}
-.htxt{font-size:13px;color:#444;line-height:1.5;padding-top:5px}
-.hnote{padding:10px 14px;background:#FFF8EC;border:1px solid var(--clients-br);border-radius:8px;font-size:11px;color:var(--clients);line-height:1.5}
 
-/* Settings modal */
-.set-row{display:flex;flex-direction:column;gap:6px}
-.set-lbl{font-size:11px;color:var(--muted);letter-spacing:.05em}
-.set-url{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:7px;font-family:var(--mono);font-size:11px;color:var(--text);background:#F8F7F5}
-.set-url:focus{outline:none;border-color:var(--mission)}
-.set-divider{height:1px;background:var(--border);margin:6px 0}
+/* Settings */
+.set-divider{height:1px;background:var(--border);margin:4px 0}
+.set-lbl{font-size:10px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+
+/* Backup section */
+.backup-row{display:flex;gap:8px}
+.backup-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:14px 8px;border-radius:9px;border:1px solid var(--border);background:#F8F7F5;cursor:pointer;font-family:var(--mono);transition:all .15s;text-align:center}
+.backup-btn:hover{border-color:var(--mission-br);background:var(--mission-bg)}
+.backup-btn .b-ico{font-size:22px;line-height:1}
+.backup-btn .b-lbl{font-size:10px;color:var(--text);letter-spacing:.06em;text-transform:uppercase;font-weight:500}
+.backup-btn .b-desc{font-size:9px;color:var(--faint);line-height:1.4;margin-top:1px}
+.backup-note{font-size:10px;color:var(--clients);background:#FFF8EC;border:1px solid var(--clients-br);border-radius:7px;padding:9px 12px;line-height:1.6}
+
+/* Bucket list */
 .bkt-list{display:flex;flex-direction:column;gap:6px}
 .bkt-item{display:flex;align-items:center;gap:8px;padding:7px 10px;background:#F8F7F5;border:1px solid var(--border);border-radius:7px}
 .bkt-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
@@ -176,138 +145,128 @@ body{padding-top:var(--sat)}
 .bkt-cancel-btn{font-family:var(--mono);font-size:10px;background:transparent;color:var(--muted);border:1px solid var(--border);padding:4px 8px;border-radius:4px;cursor:pointer}
 .add-bkt-btn{width:100%;padding:8px;background:transparent;border:1px dashed var(--border);border-radius:7px;font-family:var(--mono);font-size:11px;color:var(--muted);cursor:pointer;transition:all .15s;letter-spacing:.04em}
 .add-bkt-btn:hover{border-color:var(--mission-br);color:var(--mission)}
+
+/* Home modal */
+.hstep{display:flex;gap:14px;align-items:flex-start}
+.hico{width:32px;height:32px;border-radius:8px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;color:var(--text);font-weight:600}
+.htxt{font-size:13px;color:#444;line-height:1.5;padding-top:5px}
+.hnote{padding:10px 14px;background:#FFF8EC;border:1px solid var(--clients-br);border-radius:8px;font-size:11px;color:var(--clients);line-height:1.5}
+
+#restoreInput{display:none}
 </style>
 </head>
 <body>
 
-<!-- SETUP -->
-<div id="setup">
-  <div class="su-title">Welcome to Daily Tasks</div>
-  <div class="su-sub">One-time setup · takes about 5 minutes</div>
-  <div class="su-step">
-    <div class="su-num">1</div>
-    <div class="su-body">
-      <div class="su-h">Create the Google Sheet</div>
-      <div class="su-d">In Google Drive, create a new Sheet named <strong>Daily Critical Activities</strong>.</div>
-    </div>
-  </div>
-  <div class="su-step">
-    <div class="su-num">2</div>
-    <div class="su-body">
-      <div class="su-h">Open Apps Script</div>
-      <div class="su-d">Inside the Sheet → <strong>Extensions → Apps Script</strong>. Delete existing code and paste in the Code.gs content. Save.</div>
-    </div>
-  </div>
-  <div class="su-step">
-    <div class="su-num">3</div>
-    <div class="su-body">
-      <div class="su-h">Deploy as Web App</div>
-      <div class="su-d"><strong>Deploy → New deployment</strong> → Type: Web app → Execute as: Me → Who has access: Anyone → Deploy → authorise → copy the URL.</div>
-    </div>
-  </div>
-  <div class="su-step">
-    <div class="su-num">4</div>
-    <div class="su-body">
-      <div class="su-h">Paste your Web App URL</div>
-      <input id="urlInput" class="su-url" type="url" placeholder="https://script.google.com/macros/s/…/exec">
-    </div>
-  </div>
-  <button class="su-btn" onclick="saveSetup()">Connect &amp; Load Tasks →</button>
-  <div class="su-note">Tasks are stored in your Google Sheet. The URL is saved only on this device.</div>
+<div id="app">
+<div class="hdr">
+<div>
+<h1>Carpe Diem!</h1>
+<div class="dt" id="dtStr"></div>
+</div>
+<div class="hdr-btns">
+<button class="ibtn" title="Backup to iCloud Drive" onclick="backupToJSON()">☁</button>
+<button class="ibtn" onclick="openSettings()">⚙</button>
+</div>
 </div>
 
-<!-- APP -->
-<div id="app">
-  <div class="hdr">
-    <div>
-      <h1>Carpe Diem!</h1>
-      <div class="dt" id="dtStr"></div>
-    </div>
-    <div class="hdr-btns">
-      <button class="ibtn" onclick="loadSheet()">↺</button>
-      <button class="ibtn" onclick="openSettings()">⚙</button>
-    </div>
-  </div>
+<div class="sync" id="syncBar"></div>
 
-  <div class="sync" id="syncBar"></div>
+<div class="prog">
+<div class="prog-top">
+<span class="prog-lbl">Today's Focus</span>
+<span class="prog-ct" id="progCt">0 tasks today</span>
+</div>
+<div class="prog-track"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
+<div class="chips" id="todayChips"></div>
+</div>
 
-  <div class="prog">
-    <div class="prog-top">
-      <span class="prog-lbl">Today's Focus</span>
-      <span class="prog-ct" id="progCt">0 / 0</span>
-    </div>
-    <div class="prog-track"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
-    <div class="chips" id="todayChips"></div>
-  </div>
+<div class="filters" id="filters"></div>
+<div id="groups"></div>
 
-  <div class="filters" id="filters"></div>
-  <div id="groups"></div>
+<div class="aform" id="aform">
+<input type="text" id="taskIn" placeholder="Task description…">
+<div class="fctrls" id="fctrls"></div>
+<div class="facts">
+<button class="bcn" onclick="cancelAdd()">Cancel</button>
+<button class="bsv" onclick="commitTask()">Add</button>
+</div>
+</div>
 
-  <div class="aform" id="aform">
-    <input type="text" id="taskIn" placeholder="Task description…">
-    <div class="fctrls" id="fctrls"></div>
-    <div class="facts">
-      <button class="bcn" onclick="cancelAdd()">Cancel</button>
-      <button class="bsv" onclick="commitTask()">Add</button>
-    </div>
-  </div>
-
-  <div class="footer">
-    <button class="abtn" id="addBtn" onclick="startAdd()"><span style="font-size:16px">+</span> Add Task</button>
-  </div>
+<div class="footer">
+<button class="abtn" id="addBtn" onclick="startAdd()"><span style="font-size:16px">+</span> Add Task</button>
+</div>
 </div>
 
 <!-- Export Modal -->
 <div class="ov" id="expOv" onclick="closeExport()">
-  <div class="modal" onclick="event.stopPropagation()">
-    <div class="mrow">
-      <div><div class="mtitle">Export</div><div class="msub">Tap in the box to select all, then copy.</div></div>
-      <div class="mclose" onclick="closeExport()">×</div>
-    </div>
-    <textarea class="exparea" id="expArea" readonly onclick="this.select()"></textarea>
-    <div class="macts">
-      <button class="bout" onclick="closeExport()">Close</button>
-      <button class="bpri" id="cpyBtn" onclick="copyExp()">Copy All</button>
-    </div>
-  </div>
+<div class="modal" onclick="event.stopPropagation()">
+<div class="mrow">
+<div><div class="mtitle">Export</div><div class="msub">Tap in the box to select all, then copy.</div></div>
+<div class="mclose" onclick="closeExport()">×</div>
+</div>
+<textarea class="exparea" id="expArea" readonly onclick="this.select()"></textarea>
+<div class="macts">
+<button class="bout" onclick="closeExport()">Close</button>
+<button class="bpri" id="cpyBtn" onclick="copyExp()">Copy All</button>
+</div>
+</div>
 </div>
 
 <!-- Settings Modal -->
 <div class="ov" id="setOv" onclick="closeSettings()">
-  <div class="modal" onclick="event.stopPropagation()">
-    <div class="mrow">
-      <div><div class="mtitle">Settings</div><div class="msub">Update your Google Sheets connection</div></div>
-      <div class="mclose" onclick="closeSettings()">×</div>
-    </div>
-    <div class="set-row">
-      <div class="set-lbl">Web App URL</div>
-      <input class="set-url" id="setUrl" type="url" placeholder="https://script.google.com/macros/s/…/exec">
-    </div>
-    <div class="set-divider"></div>
-    <div class="set-lbl">Buckets</div>
-    <div class="bkt-list" id="bktList"></div>
-    <button class="add-bkt-btn" onclick="startAddBucket()">+ Add Bucket</button>
-    <div class="macts">
-      <button class="bout" onclick="closeSettings()">Cancel</button>
-      <button class="bpri" onclick="saveSettings()">Save &amp; Reconnect</button>
-    </div>
-  </div>
+<div class="modal" onclick="event.stopPropagation()">
+<div class="mrow">
+<div><div class="mtitle">Settings</div><div class="msub">Backup, restore & manage buckets</div></div>
+<div class="mclose" onclick="closeSettings()">×</div>
+</div>
+
+<div class="set-lbl">Backup & Restore</div>
+<div class="backup-row">
+<div class="backup-btn" onclick="backupToJSON()">
+<span class="b-ico">☁</span>
+<span class="b-lbl">Backup</span>
+<span class="b-desc">Download JSON<br>→ save to iCloud Drive</span>
+</div>
+<div class="backup-btn" onclick="document.getElementById('restoreInput').click()">
+<span class="b-ico">↩</span>
+<span class="b-lbl">Restore</span>
+<span class="b-desc">Load from a<br>backup JSON file</span>
+</div>
+</div>
+<div class="backup-note">
+Tap <strong>Backup</strong>, then in the download prompt choose <strong>iCloud Drive</strong>. Your data is also always stored locally in Safari on this device.
+</div>
+<input type="file" id="restoreInput" accept=".json,application/json" onchange="restoreFromJSON(this)">
+
+<div class="set-divider"></div>
+<div class="set-lbl">Buckets</div>
+<div class="bkt-list" id="bktList"></div>
+<button class="add-bkt-btn" onclick="startAddBucket()">+ Add Bucket</button>
+
+<div class="macts" style="margin-top:6px">
+<button class="bpri" onclick="closeSettings()">Done</button>
+</div>
+</div>
 </div>
 
 <!-- Home Modal -->
 <div class="ov" id="homeOv" onclick="closeHome()">
-  <div class="modal" onclick="event.stopPropagation()">
-    <div class="mrow">
-      <div><div class="mtitle">Add to Home Screen</div><div class="msub">Access your tasks in one tap</div></div>
-      <div class="mclose" onclick="closeHome()">×</div>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:14px" id="homeSteps"></div>
-    <button class="bpri" style="margin-top:8px" onclick="closeHome()">Got it</button>
-  </div>
+<div class="modal" onclick="event.stopPropagation()">
+<div class="mrow">
+<div><div class="mtitle">Add to Home Screen</div><div class="msub">Access your tasks in one tap</div></div>
+<div class="mclose" onclick="closeHome()">×</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:14px" id="homeSteps"></div>
+<button class="bpri" style="margin-top:8px" onclick="closeHome()">Got it</button>
+</div>
 </div>
 
 <script>
-// ── Bucket colour palette (cycles for new buckets) ──
+// ── Storage keys ──
+const SK_TASKS   = "tasks_data";
+const SK_BUCKETS = "tasks_buckets";
+
+// ── Colour palette ──
 const PALETTE = [
   {a:"#4A7DC0",bg:"rgba(74,125,192,.08)",br:"rgba(74,125,192,.2)"},
   {a:"#B87A20",bg:"rgba(184,122,32,.08)",br:"rgba(184,122,32,.2)"},
@@ -319,245 +278,224 @@ const PALETTE = [
 const ICON_SET = ["◈","◇","◉","◆","○","◎"];
 
 let BUCKETS = ["Mission","Clients","Internal BCM"];
-
-function getColor(b){ const i=BUCKETS.indexOf(b); return PALETTE[i>=0?i%PALETTE.length:0]; }
-function getIcon(b){  const i=BUCKETS.indexOf(b); return ICON_SET[i>=0?i%ICON_SET.length:0]; }
-
-function saveBuckets(){ localStorage.setItem("tasks_buckets", JSON.stringify(BUCKETS)); }
+const getColor = b => { const i=BUCKETS.indexOf(b); return PALETTE[i>=0?i%PALETTE.length:0]; };
+const getIcon  = b => { const i=BUCKETS.indexOf(b); return ICON_SET[i>=0?i%ICON_SET.length:0]; };
+const saveBuckets = () => localStorage.setItem(SK_BUCKETS, JSON.stringify(BUCKETS));
 function loadBuckets(){
-  const s=localStorage.getItem("tasks_buckets");
+  const s=localStorage.getItem(SK_BUCKETS);
   if(s){ try{ BUCKETS=JSON.parse(s); }catch(e){} }
 }
 
+// ── Seed (first run only) ──
 const SEED = [
-  {id:1, bucket:"Mission",      text:"Write mission (Prof & Pers Agenda)",                      today:false,time:""},
-  {id:2, bucket:"Mission",      text:"Play with Claude",                                         today:true, time:""},
-  {id:3, bucket:"Mission",      text:"FS AI work: GenW, CustomerAI Council, AI POVs",           today:false,time:""},
-  {id:4, bucket:"Mission",      text:"BINDI",                                                    today:false,time:""},
-  {id:5, bucket:"Mission",      text:"NBFC MaaS / LMaaS / ERPMaaS / LOSaaS: Orientation with Lentra",today:false,time:""},
-  {id:6, bucket:"Mission",      text:"Learn: JavaScript",                                        today:false,time:""},
-  {id:7, bucket:"Clients",      text:"HDB – Sales Productivity",                                 today:true, time:""},
-  {id:8, bucket:"Clients",      text:"HDB – Process Mining",                                     today:false,time:""},
-  {id:9, bucket:"Clients",      text:"HDB – Mobile App 2.0",                                     today:false,time:""},
-  {id:10,bucket:"Clients",      text:"ICICI HFC – Resolve stalemate",                            today:false,time:""},
-  {id:11,bucket:"Clients",      text:"Nomura – FY26 plan: corrective actions",                  today:false,time:""},
-  {id:12,bucket:"Clients",      text:"TechM – Proposal",                                         today:false,time:""},
-  {id:13,bucket:"Clients",      text:"RBL – Ask Jaideep for meeting",                            today:false,time:""},
-  {id:14,bucket:"Clients",      text:"RBL – Respond to Ravi Pichan",                             today:false,time:""},
-  {id:15,bucket:"Clients",      text:"Zurich – Chase for addendum",                              today:false,time:""},
-  {id:16,bucket:"Clients",      text:"Yes Bank – Schedule session",                              today:false,time:""},
-  {id:17,bucket:"Clients",      text:"SIB Credit Cards",                                         today:false,time:""},
-  {id:18,bucket:"Clients",      text:"Religare Finvest",                                         today:false,time:""},
-  {id:19,bucket:"Clients",      text:"Tata Capital",                                             today:false,time:""},
-  {id:20,bucket:"Clients",      text:"Commercial Bank of Ceylon",                                today:false,time:""},
-  {id:21,bucket:"Clients",      text:"Religare – Sushilji meeting",                              today:false,time:""},
-  {id:22,bucket:"Clients",      text:"FINO – Meet Ketan",                                        today:false,time:""},
-  {id:23,bucket:"Internal BCM", text:"MANTHAN 360",                                              today:false,time:""},
-  {id:24,bucket:"Internal BCM", text:"FY26 Sales forecast & Pipeline review (Debu's ask)",      today:false,time:""},
-  {id:25,bucket:"Internal BCM", text:"DBM Survey",                                               today:false,time:""},
-  {id:26,bucket:"Internal BCM", text:"FY27 Focus accounts",                                      today:false,time:""},
-  {id:27,bucket:"Internal BCM", text:"SOFSI",                                                    today:true, time:""},
-  {id:28,bucket:"Internal BCM", text:"SatSure",                                                  today:false,time:""},
-  {id:29,bucket:"Internal BCM", text:"Banking: Corridor plan – Netherlands, ASEAN",              today:false,time:""}
+  {id:1,  bucket:"Mission",       text:"Write mission (Prof & Pers Agenda)",                      today:false, time:""},
+  {id:2,  bucket:"Mission",       text:"Play with Claude",                                        today:true,  time:""},
+  {id:3,  bucket:"Mission",       text:"FS AI work: GenW, CustomerAI Council, AI POVs",           today:false, time:""},
+  {id:4,  bucket:"Mission",       text:"BINDI",                                                   today:false, time:""},
+  {id:5,  bucket:"Mission",       text:"NBFC MaaS / LMaaS / ERPMaaS / LOSaaS: Orientation with Lentra", today:false, time:""},
+  {id:6,  bucket:"Mission",       text:"Learn: JavaScript",                                       today:false, time:""},
+  {id:7,  bucket:"Clients",       text:"HDB – Sales Productivity",                                today:true,  time:""},
+  {id:8,  bucket:"Clients",       text:"HDB – Process Mining",                                    today:false, time:""},
+  {id:9,  bucket:"Clients",       text:"HDB – Mobile App 2.0",                                    today:false, time:""},
+  {id:10, bucket:"Clients",       text:"ICICI HFC – Resolve stalemate",                           today:false, time:""},
+  {id:11, bucket:"Clients",       text:"Nomura – FY26 plan: corrective actions",                  today:false, time:""},
+  {id:12, bucket:"Clients",       text:"TechM – Proposal",                                        today:false, time:""},
+  {id:13, bucket:"Clients",       text:"RBL – Ask Jaideep for meeting",                           today:false, time:""},
+  {id:14, bucket:"Clients",       text:"RBL – Respond to Ravi Pichan",                            today:false, time:""},
+  {id:15, bucket:"Clients",       text:"Zurich – Chase for addendum",                             today:false, time:""},
+  {id:16, bucket:"Clients",       text:"Yes Bank – Schedule session",                             today:false, time:""},
+  {id:17, bucket:"Clients",       text:"SIB Credit Cards",                                        today:false, time:""},
+  {id:18, bucket:"Clients",       text:"Religare Finvest",                                        today:false, time:""},
+  {id:19, bucket:"Clients",       text:"Tata Capital",                                            today:false, time:""},
+  {id:20, bucket:"Clients",       text:"Commercial Bank of Ceylon",                               today:false, time:""},
+  {id:21, bucket:"Clients",       text:"Religare – Sushilji meeting",                             today:false, time:""},
+  {id:22, bucket:"Clients",       text:"FINO – Meet Ketan",                                       today:false, time:""},
+  {id:23, bucket:"Internal BCM",  text:"MANTHAN 360",                                             today:false, time:""},
+  {id:24, bucket:"Internal BCM",  text:"FY26 Sales forecast & Pipeline review (Debu's ask)",      today:false, time:""},
+  {id:25, bucket:"Internal BCM",  text:"DBM Survey",                                              today:false, time:""},
+  {id:26, bucket:"Internal BCM",  text:"FY27 Focus accounts",                                     today:false, time:""},
+  {id:27, bucket:"Internal BCM",  text:"SOFSI",                                                   today:true,  time:""},
+  {id:28, bucket:"Internal BCM",  text:"SatSure",                                                 today:false, time:""},
+  {id:29, bucket:"Internal BCM",  text:"Banking: Corridor plan – Netherlands, ASEAN",             today:false, time:""},
 ];
 
 let tasks=[], filter="Today", collapsed={}, saveTimer=null;
-let editingId=null; // which task row is in inline-edit mode
-let formBucket="Mission", formToday=false, formTime=""; // for add form
-let webAppUrl = localStorage.getItem("tasks_url")||"";
+let editingId=null;
+let formBucket="Mission", formToday=false, formTime="";
 
 // ── Boot ──
 window.onload = () => {
   loadBuckets();
   document.getElementById("dtStr").textContent =
     new Date().toLocaleDateString("en-IN",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
-  if (!webAppUrl) { document.getElementById("setup").classList.add("show"); }
-  else            { document.getElementById("app").classList.add("show"); loadSheet(); }
+  loadTasks();
+  render();
   buildHomeSteps();
 };
 
-// ── Setup ──
-function saveSetup() {
-  const url = document.getElementById("urlInput").value.trim();
-  if (!url.startsWith("https://script.google.com")) { alert("Please paste a valid Apps Script Web App URL."); return; }
-  webAppUrl = url;
-  localStorage.setItem("tasks_url", url);
-  document.getElementById("setup").classList.remove("show");
-  document.getElementById("app").classList.add("show");
-  loadSheet();
+// ── localStorage ──
+function loadTasks(){
+  const s = localStorage.getItem(SK_TASKS);
+  if(s){ try{ tasks=JSON.parse(s); return; }catch(e){} }
+  tasks = JSON.parse(JSON.stringify(SEED)); // first run
+  saveTasks(false);
+}
+
+function saveTasks(notify=true){
+  localStorage.setItem(SK_TASKS, JSON.stringify(tasks));
+  if(notify) sync("saved","✓ Saved");
+}
+
+function delaySave(){
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(()=>saveTasks(true), 300);
+}
+
+// ── Backup → iCloud Drive ──
+function backupToJSON(){
+  const payload = {
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    buckets: BUCKETS,
+    tasks: tasks
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], {type:"application/json"});
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement("a");
+  a.href     = url;
+  a.download = "tasks-backup-" + new Date().toISOString().slice(0,10) + ".json";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  sync("saved","✓ Backup ready — choose iCloud Drive to save");
+}
+
+// ── Restore ──
+function restoreFromJSON(input){
+  const file = input.files[0]; if(!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try{
+      const data = JSON.parse(e.target.result);
+      if(!data.tasks || !Array.isArray(data.tasks)) throw new Error();
+      tasks = data.tasks;
+      if(data.buckets && Array.isArray(data.buckets)){ BUCKETS=data.buckets; saveBuckets(); }
+      saveTasks(false);
+      render();
+      renderBktList();
+      sync("saved","✓ Restored — "+data.tasks.length+" tasks loaded");
+    }catch(err){ sync("err","⚠ Invalid backup file"); }
+  };
+  reader.readAsText(file);
+  input.value="";
+}
+
+// ── Sync bar ──
+function sync(state, msg){
+  const el = document.getElementById("syncBar");
+  el.className = "sync "+state;
+  el.textContent = msg;
+  if(state==="saved") setTimeout(()=>{ if(el.textContent===msg) el.textContent=""; },3000);
 }
 
 // ── Settings ──
-function openSettings() {
-  document.getElementById("setUrl").value = webAppUrl;
-  renderBktList();
-  document.getElementById("setOv").classList.add("open");
-}
-function closeSettings() { document.getElementById("setOv").classList.remove("open"); }
-function saveSettings() {
-  const url = document.getElementById("setUrl").value.trim();
-  if (!url.startsWith("https://script.google.com")) { alert("Please paste a valid Apps Script Web App URL."); return; }
-  webAppUrl = url;
-  localStorage.setItem("tasks_url", url);
-  closeSettings();
-  loadSheet();
-}
+function openSettings(){ renderBktList(); document.getElementById("setOv").classList.add("open"); }
+function closeSettings(){ document.getElementById("setOv").classList.remove("open"); }
 
-// ── Bucket Manager ──
-let editingBkt = null; // bucket name currently being renamed
+// ── Bucket manager ──
+let editingBkt = null;
 
-function renderBktList() {
-  const list = document.getElementById("bktList"); list.innerHTML="";
-  BUCKETS.forEach(b => {
-    if (editingBkt === b) {
-      // Edit row
-      const row = document.createElement("div"); row.className="bkt-edit-row";
-      const inp = document.createElement("input"); inp.className="bkt-edit-inp"; inp.value=b; inp.id="bkt-inp";
+function renderBktList(){
+  const list=document.getElementById("bktList"); list.innerHTML="";
+  BUCKETS.forEach(b=>{
+    if(editingBkt===b){
+      const row=document.createElement("div"); row.className="bkt-edit-row";
+      const inp=document.createElement("input"); inp.className="bkt-edit-inp"; inp.value=b; inp.id="bkt-inp";
       inp.onkeydown=e=>{ if(e.key==="Enter") commitRenameBucket(b); if(e.key==="Escape") cancelBktEdit(); };
-      const sv = document.createElement("button"); sv.className="bkt-save-btn"; sv.textContent="Save";
-      sv.onclick=()=>commitRenameBucket(b);
-      const cn = document.createElement("button"); cn.className="bkt-cancel-btn"; cn.textContent="Cancel";
-      cn.onclick=cancelBktEdit;
+      const sv=document.createElement("button"); sv.className="bkt-save-btn"; sv.textContent="Save"; sv.onclick=()=>commitRenameBucket(b);
+      const cn=document.createElement("button"); cn.className="bkt-cancel-btn"; cn.textContent="Cancel"; cn.onclick=cancelBktEdit;
       row.appendChild(inp); row.appendChild(sv); row.appendChild(cn);
       list.appendChild(row);
       setTimeout(()=>inp.focus(),50);
     } else {
-      const c = getColor(b);
-      const item = document.createElement("div"); item.className="bkt-item";
-      const dot = document.createElement("div"); dot.className="bkt-dot"; dot.style.background=c.a;
-      const nm  = document.createElement("div"); nm.className="bkt-name"; nm.textContent=b;
-      const btn = document.createElement("button"); btn.className="bkt-edit-btn"; btn.textContent="Rename";
+      const c=getColor(b);
+      const item=document.createElement("div"); item.className="bkt-item";
+      const dot=document.createElement("div"); dot.className="bkt-dot"; dot.style.background=c.a;
+      const nm=document.createElement("div"); nm.className="bkt-name"; nm.textContent=b;
+      const btn=document.createElement("button"); btn.className="bkt-edit-btn"; btn.textContent="Rename";
       btn.onclick=()=>{ editingBkt=b; renderBktList(); };
       item.appendChild(dot); item.appendChild(nm); item.appendChild(btn);
       list.appendChild(item);
     }
   });
 }
-
-function cancelBktEdit() { editingBkt=null; renderBktList(); }
-
-function commitRenameBucket(oldName) {
-  const inp = document.getElementById("bkt-inp");
-  const newName = inp ? inp.value.trim() : "";
-  if (!newName) { cancelBktEdit(); return; }
-  if (newName === oldName) { cancelBktEdit(); return; }
-  if (BUCKETS.includes(newName)) { alert("A bucket with that name already exists."); return; }
-  // Rename in BUCKETS list
-  BUCKETS = BUCKETS.map(b => b===oldName ? newName : b);
-  // Rename in all tasks
-  tasks = tasks.map(t => t.bucket===oldName ? {...t, bucket:newName} : t);
-  // Update filter if needed
-  if (filter===oldName) filter=newName;
-  saveBuckets();
-  editingBkt=null;
-  renderBktList();
-  delaySave();
-  render();
+function cancelBktEdit(){ editingBkt=null; renderBktList(); }
+function commitRenameBucket(oldName){
+  const inp=document.getElementById("bkt-inp");
+  const newName=inp?inp.value.trim():"";
+  if(!newName){ cancelBktEdit(); return; }
+  if(newName===oldName){ cancelBktEdit(); return; }
+  if(BUCKETS.includes(newName)){ alert("A bucket with that name already exists."); return; }
+  BUCKETS=BUCKETS.map(b=>b===oldName?newName:b);
+  tasks=tasks.map(t=>t.bucket===oldName?{...t,bucket:newName}:t);
+  if(filter===oldName) filter=newName;
+  saveBuckets(); editingBkt=null; renderBktList(); delaySave(); render();
 }
-
-function startAddBucket() {
-  const name = prompt("New bucket name:");
-  if (!name || !name.trim()) return;
-  const trimmed = name.trim();
-  if (BUCKETS.includes(trimmed)) { alert("A bucket with that name already exists."); return; }
-  BUCKETS.push(trimmed);
-  saveBuckets();
-  renderBktList();
-  render();
+function startAddBucket(){
+  const name=prompt("New bucket name:"); if(!name||!name.trim()) return;
+  const trimmed=name.trim();
+  if(BUCKETS.includes(trimmed)){ alert("A bucket with that name already exists."); return; }
+  BUCKETS.push(trimmed); saveBuckets(); renderBktList(); render();
 }
-
-// ── Sync ──
-function sync(state, msg) {
-  const el = document.getElementById("syncBar");
-  el.className = "sync " + state;
-  el.textContent = msg;
-  if (state==="saved") setTimeout(()=>{ if(el.textContent===msg) el.textContent=""; }, 3000);
-}
-
-async function loadSheet() {
-  sync("saving","Loading from Google Sheets…");
-  try {
-    const r = await fetch(webAppUrl);
-    const d = await r.json();
-    if (d.status==="ok") { tasks=d.tasks; sync("saved","✓ Loaded"); render(); }
-    else throw new Error(d.message);
-  } catch(e) { sync("err","⚠ Could not load — tap ⚙ to check your URL"); }
-}
-
-async function saveSheet() {
-  sync("saving","Saving…");
-  try {
-    const encoded = encodeURIComponent(JSON.stringify(tasks));
-    const r = await fetch(webAppUrl + "?action=save&data=" + encoded);
-    const d = await r.json();
-    if (d.status==="ok") sync("saved","✓ Saved to Google Sheets");
-    else throw new Error(d.message);
-  } catch(e) { sync("err","⚠ Save failed"); }
-}
-
-function delaySave() { clearTimeout(saveTimer); saveTimer=setTimeout(saveSheet,800); }
 
 // ── Mutations ──
 function mut(fn){ fn(); delaySave(); render(); }
-const find      = id => tasks.find(t=>t.id===id);
-const removeTask= id => { if(confirm("Delete this task?")) mut(()=>{ tasks=tasks.filter(t=>t.id!==id); }); };
-const toggleToday=id => mut(()=>{ const t=find(id); t.today=!t.today; });
+const find       = id => tasks.find(t=>t.id===id);
+const removeTask = id => { if(confirm("Delete this task?")) mut(()=>{ tasks=tasks.filter(t=>t.id!==id); }); };
+const toggleToday= id => mut(()=>{ const t=find(id); t.today=!t.today; });
 
-// ── Inline Edit ──
-function startInlineEdit(id) {
-  editingId = id;
-  render(); // re-render so that row becomes edit mode
-  setTimeout(()=>{
-    const inp = document.getElementById("einput-"+id);
-    if (inp) inp.focus();
-  }, 50);
+// ── Inline edit ──
+function startInlineEdit(id){
+  editingId=id; render();
+  setTimeout(()=>{ const inp=document.getElementById("einput-"+id); if(inp) inp.focus(); },50);
+}
+function cancelInlineEdit(){ editingId=null; render(); }
+function commitInlineEdit(id){
+  const inp=document.getElementById("einput-"+id);
+  if(!inp||!inp.value.trim()){ cancelInlineEdit(); return; }
+  const bkt=document.querySelector(".eb-bkt.on-active")?.dataset.bucket;
+  const tod=document.querySelector(".eb-tod.on-active")!==null;
+  const tim=document.getElementById("etime-"+id)?.value||"";
+  mut(()=>{ const t=find(id); t.text=inp.value.trim(); if(bkt) t.bucket=bkt; t.today=tod; t.time=tim; });
+  editingId=null;
 }
 
-function cancelInlineEdit() { editingId=null; render(); }
-
-function commitInlineEdit(id) {
-  const inp = document.getElementById("einput-"+id);
-  if (!inp || !inp.value.trim()) { cancelInlineEdit(); return; }
-  const bkt = document.querySelector(".eb-bkt.on-active")?.dataset.bucket;
-  const tod = document.querySelector(".eb-tod.on-active") !== null;
-  const tim = document.getElementById("etime-"+id)?.value || "";
-  mut(()=>{
-    const t = find(id);
-    t.text   = inp.value.trim();
-    if (bkt) t.bucket = bkt;
-    t.today  = tod;
-    t.time   = tim;
-  });
-  editingId = null;
-}
-
-// ── Add Form ──
-function startAdd() {
-  editingId = null;
-  formBucket = BUCKETS.includes(filter)?filter:"Mission";
-  formToday  = filter==="Today";
-  formTime   = "";
+// ── Add form ──
+function startAdd(){
+  editingId=null;
+  formBucket=BUCKETS.includes(filter)?filter:BUCKETS[0]||"Mission";
+  formToday=filter==="Today"; formTime="";
   document.getElementById("taskIn").value="";
   document.getElementById("aform").classList.add("show");
   document.getElementById("addBtn").style.display="none";
   buildFCtrls();
   setTimeout(()=>document.getElementById("taskIn").focus(),50);
 }
-function cancelAdd() {
+function cancelAdd(){
   document.getElementById("aform").classList.remove("show");
   document.getElementById("addBtn").style.display="flex";
 }
-function commitTask() {
+function commitTask(){
   const txt=document.getElementById("taskIn").value.trim(); if(!txt) return;
   mut(()=>{ tasks.push({id:Date.now(),bucket:formBucket,text:txt,today:formToday,time:formTime}); });
   cancelAdd();
 }
-function buildFCtrls() {
+function buildFCtrls(){
   const d=document.getElementById("fctrls"); d.innerHTML="";
   BUCKETS.forEach(b=>{
     const c=getColor(b);
-    const btn=document.createElement("button");
-    btn.className="fb"; btn.textContent=b;
+    const btn=document.createElement("button"); btn.className="fb"; btn.textContent=b;
     if(formBucket===b) btn.style.cssText=`background:${c.bg};border-color:${c.br};color:${c.a}`;
     btn.onclick=()=>{ formBucket=b; buildFCtrls(); }; d.appendChild(btn);
   });
@@ -568,42 +506,38 @@ function buildFCtrls() {
 }
 
 // ── Render ──
-function render() {
-  renderProg(); renderFilters(); renderGroups();
-}
+function render(){ renderProg(); renderFilters(); renderGroups(); }
 
 const visible = () =>
   filter==="Today"?tasks.filter(t=>t.today):filter==="All"?tasks:tasks.filter(t=>t.bucket===filter);
-const sortB = arr=>[...arr].sort((a,b)=> b.today - a.today);
+const sortB = arr=>[...arr].sort((a,b)=>b.today-a.today);
 
-function renderProg() {
+function renderProg(){
   const td=tasks.filter(t=>t.today), tot=td.length;
   document.getElementById("progCt").textContent=tot+" task"+(tot!==1?"s":"")+" today";
-  document.getElementById("progCt").style.color="var(--today)";
   document.getElementById("progFill").style.width=tot?"100%":"0%";
   const ch=document.getElementById("todayChips"); ch.innerHTML="";
   td.forEach(t=>{
     const c=getColor(t.bucket), el=document.createElement("span"); el.className="chip";
-    el.textContent=t.text;
-    el.style.cssText=`color:${c.a};background:${c.bg};border-color:${c.br}`;
+    el.textContent=t.text; el.style.cssText=`color:${c.a};background:${c.bg};border-color:${c.br}`;
     ch.appendChild(el);
   });
 }
 
-function renderFilters() {
+function renderFilters(){
   const f=document.getElementById("filters"); f.innerHTML="";
   const items=[{k:"Today",l:"◎ Today"},{k:"All",l:"All"}];
   BUCKETS.forEach(b=>items.splice(items.length-1,0,{k:b,l:getIcon(b)+" "+b}));
   items.forEach(({k,l})=>{
     const btn=document.createElement("button"); btn.className="pill";
     const isB=BUCKETS.includes(k);
-    if(filter===k) btn.classList.add(isB?"onm":"on"); // onm uses accent color via inline style below
+    if(filter===k) btn.classList.add("on");
     if(filter===k&&isB){ const c=getColor(k); btn.style.cssText=`border-color:${c.br};background:${c.bg};color:${c.a}`; }
     btn.textContent=l; btn.onclick=()=>{ filter=k; render(); }; f.appendChild(btn);
   });
 }
 
-function renderGroups() {
+function renderGroups(){
   const w=document.getElementById("groups"); w.innerHTML="";
   const vis=visible();
   const grps=BUCKETS.map(b=>({b,tasks:sortB(vis.filter(t=>t.bucket===b))})).filter(g=>g.tasks.length);
@@ -619,44 +553,35 @@ function renderGroups() {
     hdr.onclick=()=>{ collapsed[b]=!collapsed[b]; render(); }; grp.appendChild(hdr);
     if(!isCol){
       const list=document.createElement("div"); list.className="tlist";
-      bt.forEach(t=>list.appendChild(t.id===editingId ? mkEditRow(t,c) : mkRow(t,c)));
+      bt.forEach(t=>list.appendChild(t.id===editingId?mkEditRow(t,c):mkRow(t,c)));
       grp.appendChild(list);
     }
     w.appendChild(grp);
   });
 }
 
-// Normal task row
 function mkRow(t,c){
   const row=document.createElement("div"); row.className="trow";
-  // Text
   const body=document.createElement("div"); body.className="tbody";
   const txt=document.createElement("span"); txt.className="ttxt"; txt.textContent=t.text;
   txt.onclick=()=>startInlineEdit(t.id); body.appendChild(txt);
   if(t.time){ const ti=document.createElement("span"); ti.className="ttime"; ti.textContent=fmtT(t.time); body.appendChild(ti); }
   row.appendChild(body);
-  // Today button
   const tdb=document.createElement("div"); tdb.className="tdb"+(t.today?" act":"");
   tdb.innerHTML=`<span class="dot"></span>${t.today?"Today":""}`;
   tdb.onclick=()=>toggleToday(t.id); row.appendChild(tdb);
-  // Delete — always visible
   const del=document.createElement("div"); del.className="del"; del.textContent="×";
   del.onclick=()=>removeTask(t.id); row.appendChild(del);
   return row;
 }
 
-// Inline edit row
 function mkEditRow(t,c){
   const row=document.createElement("div"); row.className="trow-edit";
-  // Input
   const inp=document.createElement("input"); inp.type="text"; inp.className="edit-input";
   inp.id="einput-"+t.id; inp.value=t.text;
   inp.onkeydown=e=>{ if(e.key==="Enter") commitInlineEdit(t.id); if(e.key==="Escape") cancelInlineEdit(); };
   row.appendChild(inp);
-  // Controls
   const ctrls=document.createElement("div"); ctrls.className="edit-ctrls";
-  const bktCls={};
-  BUCKETS.forEach(b=>bktCls[b]="onm"); // fallback, we use inline style instead
   BUCKETS.forEach(b=>{
     const c=getColor(b);
     const btn=document.createElement("button");
@@ -676,29 +601,25 @@ function mkEditRow(t,c){
   td.onclick=()=>{ td.classList.toggle("on-active"); td.classList.toggle("ont"); };
   ctrls.appendChild(td);
   const ti=document.createElement("input"); ti.type="time"; ti.className="etime";
-  ti.id="etime-"+t.id; ti.value=t.time||"";
-  ctrls.appendChild(ti);
+  ti.id="etime-"+t.id; ti.value=t.time||""; ctrls.appendChild(ti);
   row.appendChild(ctrls);
-  // Actions
   const acts=document.createElement("div"); acts.className="edit-acts";
-  const canc=document.createElement("button"); canc.className="e-cancel"; canc.textContent="Cancel";
-  canc.onclick=cancelInlineEdit; acts.appendChild(canc);
-  const sav=document.createElement("button"); sav.className="e-save"; sav.textContent="Save";
-  sav.onclick=()=>commitInlineEdit(t.id); acts.appendChild(sav);
+  const canc=document.createElement("button"); canc.className="e-cancel"; canc.textContent="Cancel"; canc.onclick=cancelInlineEdit; acts.appendChild(canc);
+  const sav=document.createElement("button"); sav.className="e-save"; sav.textContent="Save"; sav.onclick=()=>commitInlineEdit(t.id); acts.appendChild(sav);
   row.appendChild(acts);
   return row;
 }
 
-function fmtT(t){ if(!t) return ""; const[h,m]=t.split(":").map(Number); return `${h%12||12}:${String(m).padStart(2,"0")} ${h>=12?"PM":"AM"}`; }
+const fmtT = t => { if(!t) return ""; const[h,m]=t.split(":").map(Number); return `${h%12||12}:${String(m).padStart(2,"0")} ${h>=12?"PM":"AM"}`; };
 
-// ── Export ──
+// ── Text Export ──
 function openExport(){
   const dt=new Date().toLocaleDateString("en-IN",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
   let o=`DAILY CRITICAL ACTIVITIES\n${dt}\n${"═".repeat(40)}\n\n`;
   BUCKETS.forEach(b=>{
     const bt=tasks.filter(t=>t.bucket===b); if(!bt.length) return;
     o+=`${getIcon(b)} ${b.toUpperCase()}\n${"─".repeat(30)}\n`;
-    bt.forEach(t=>{ o+=`[ ] ${t.text}${t.time?" @ "+fmtT(t.time):""}${t.today?"  ◎ TODAY":""}\n`; });
+    bt.forEach(t=>{ o+=`[ ] ${t.text}${t.time?" @ "+fmtT(t.time):""}${t.today?" ◎ TODAY":""}\n`; });
     o+="\n";
   });
   const td=tasks.filter(t=>t.today);
@@ -715,7 +636,7 @@ function copyExp(){
   });
 }
 
-// ── Home ──
+// ── Home Screen ──
 function buildHomeSteps(){
   const ios=/iPhone|iPad|iPod/i.test(navigator.userAgent);
   const and=/Android/i.test(navigator.userAgent);
